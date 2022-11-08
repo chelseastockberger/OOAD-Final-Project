@@ -44,45 +44,6 @@ public class Map {
 
     }
 
-    // Given a coordinate, generate adjacent tiles
-    ArrayList<ArrayList<Integer>> getDirections(int i, int j){
-
-        ArrayList<ArrayList<Integer>> arr = new ArrayList<ArrayList<Integer>>();
-        arr.add(new ArrayList<>());
-
-        int count = 0;
-
-        if(j+1 <= s.screenRows-2){ // if can move down
-            arr.add(new ArrayList<>());
-            arr.get(0).add(0);
-            arr.get(0).add(1);
-            count++;
-        }
-        if(j-1 >= 2){ // if can move up
-            arr.add(new ArrayList<>());
-            arr.get(count).add(0);
-            arr.get(count).add(-1);
-            count ++;
-        }
-
-        if(i-1 >= 2){ // if can move left
-            arr.add(new ArrayList<>());
-            arr.get(count).add(-1);
-            arr.get(count).add(0);
-            count ++;
-        }
-        if(i+1 <= s.screenCols-3){ // if can move right
-            arr.add(new ArrayList<>());
-            arr.get(count).add(1);
-            arr.get(count).add(0);
-            count ++;
-        }
-
-
-        return arr;
-
-    }
-
     // ------------ Map Creation --------------------
 
     public void newMap(){
@@ -149,7 +110,8 @@ public class Map {
 
         for (int i = 0; i < s.screenCols; i++) {
 
-            x+=s.tileSize;
+            if(i!=0)
+                x+=s.tileSize;
             y=0;
 
             for (int j = 0; j < s.screenRows; j++) {
@@ -157,8 +119,6 @@ public class Map {
                 Tile t = tF.getTile(charmap[i][j]);
                 t.x = x;
                 t.y = y;
-
-                //System.out.println(x + "," + y);
 
                 y+=s.tileSize;
 

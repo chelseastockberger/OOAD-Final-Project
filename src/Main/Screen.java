@@ -28,7 +28,7 @@ public class Screen extends JPanel implements Runnable{
     int FPS = 60;
     public Collision collision = new Collision(this);
     ArrayList<Enemy> enemies;
-    Player player = new Player(this, input);
+    public Player player = new Player(this, input);
     EnemyFactory ef = new EnemyFactory();
     Enemy e = ef.getEnemy(this);
 

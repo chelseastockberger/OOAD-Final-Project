@@ -14,9 +14,10 @@ import java.util.ArrayList;
 public class Player extends Entity{
 
     InputHandler k;
-    int health = 10;
 
     public Player(Screen s, InputHandler k){
+        health = 100;
+        maxHealth = 100;
         this.s = s;
         this.k = k;
 
@@ -128,6 +129,18 @@ public class Player extends Entity{
         }
         g.drawImage(img,x,y,s.tileSize,s.tileSize,null);
 
+        // Draw health bar
+        double scale = (double)400/maxHealth;
+        double hpBar = scale*health;
+
+        // Outline
+        g.setColor(new Color(139, 186, 101));
+        g.fillRect(22, 22, 405, 25);
+
+        // Fill red
+        g.setColor(new Color(255,30,0));
+        g.fillRect(25, 25, (int)hpBar, 20);
+
     }
     public void getImage(){
 
@@ -154,6 +167,11 @@ public class Player extends Entity{
             e.printStackTrace();
         }
 
+    }
+
+    public void getAttack(int dmg){
+        // if not blocking, take damage
+        health -= dmg;
     }
 
 }
