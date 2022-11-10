@@ -10,6 +10,8 @@ import TileMap.Map;
 
 public class Screen extends JPanel implements Runnable{
 
+    Game game;
+
     // Settings for the window screen
 
     final int singleTileSize = 32; // 32 x 32 px tile
@@ -22,28 +24,28 @@ public class Screen extends JPanel implements Runnable{
 
     // Objects/variables
 
-    public Map map = new Map(this);
-    InputHandler input = new InputHandler();
+    public Map map;
+    InputHandler input;
+    public Collision collision;
     Thread thread;
     int FPS = 60;
-    public Collision collision = new Collision(this);
     ArrayList<Enemy> enemies;
-    public Player player = new Player(this, input);
-    EnemyFactory ef = new EnemyFactory();
-    Enemy e = ef.getEnemy(this);
+    public Player player;
 
 
-    public Screen(){
+
+    public Screen(Game g){
+        this.game = g;
+        map = new Map(this);
+        input = new InputHandler();
+        collision = new Collision(this);
+        player = new Player(this, input);
+
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.white);
         this.setDoubleBuffered(true);
         this.addKeyListener(input);
         this.setFocusable(true);
-    }
-
-    public void setEnemies(ArrayList<Enemy> enemies){
-
-        this.enemies = enemies;
 
     }
 
@@ -80,8 +82,16 @@ public class Screen extends JPanel implements Runnable{
     public void update(){
 
        player.update();
-       e.update();
 
+       for(Enemy e: enemies){
+           if(!e.isDead()){
+               e.update();
+           }
+       }
+
+       if(checkEnemiesDefeated()){
+           game.newLevel();
+       }
 
     }
 
@@ -93,9 +103,41 @@ public class Screen extends JPanel implements Runnable{
 
         map.draw(g2D);
         player.draw(g2D);
-        e.draw(g2D);
+
+        for(Enemy e: enemies){
+            if(!e.isDead()){
+                e.draw(g2D);
+            }
+        }
 
         g2D.dispose();
     }
+
+    // Gameplay
+
+    public boolean checkEnemiesDefeated(){
+
+        int cnt = 0;
+        for(Enemy e: enemies){
+            if(e.isDead())
+                cnt++;
+        }
+
+        if(cnt == enemies.size()){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public void loadMap(){
+
+        map = new Map(this);
+
+    }
+
+
+
 
 }

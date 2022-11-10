@@ -56,6 +56,19 @@ public abstract class Enemy extends Entity{
 
         g.drawImage(currimage,x,y,s.tileSize,s.tileSize,null);
 
+
+        // Draw HP bars
+        double scale = (double)s.tileSize/maxHealth;
+        double hpBar = scale*health;
+
+        // Outline
+        g.setColor(new Color(139, 186, 101));
+        g.fillRect(x-1, y-16, s.tileSize+2, 12);
+
+        // Fill red
+        g.setColor(new Color(255,30,0));
+        g.fillRect(x, y-15, (int)hpBar, 12);
+
     }
 
     // Check if close to player
@@ -94,7 +107,7 @@ public abstract class Enemy extends Entity{
         }else{
             currimage = image;
         }
-        // Do attack
+        // Do attack every 50
         if(attackCount >= 50){
             currimage = attackimage;
             attackCount = 0;
@@ -187,20 +200,134 @@ class Ghost extends Enemy {
 
 class Blob extends Enemy{
 
+    public Blob(Screen s){
+
+        this.s = s;
+        health = 20;
+        maxHealth = 20;
+        damage = 10;
+        setPos();
+
+        speed=1;
+        attackSpeed = 2;
+        dir = "-";
+        hitbox = new Rectangle(9,15,13,17);
+
+        try {
+
+            File file = new File("resources/enemies/blob.png");
+            File file2 = new File("resources/enemies/ghost-attack.png");
+            image = ImageIO.read(file);
+            attackimage = ImageIO.read(file2);
+            currimage = image;
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+
+    }
 
 }
 
 class Isopod extends Enemy{
+
+    public Isopod(Screen s){
+
+        this.s = s;
+        health = 20;
+        maxHealth = 20;
+        damage = 10;
+        setPos();
+
+        speed=1;
+        attackSpeed = 2;
+        dir = "-";
+        hitbox = new Rectangle(9,15,13,17);
+
+        try {
+
+            File file = new File("resources/enemies/pillbug.png");
+            File file2 = new File("resources/enemies/ghost-attack.png");
+            image = ImageIO.read(file);
+            attackimage = ImageIO.read(file2);
+            currimage = image;
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 
 }
 
 class Skull extends Enemy{
 
+    public Skull(Screen s){
+
+        this.s = s;
+        health = 60;
+        maxHealth = 60;
+        damage = 25;
+        setPos();
+
+        speed=1;
+        attackSpeed = 2;
+        dir = "-";
+        hitbox = new Rectangle(9,15,13,17);
+
+        try {
+
+            File file = new File("resources/enemies/skullkid.png");
+            File file2 = new File("resources/enemies/ghost-attack.png");
+            image = ImageIO.read(file);
+            attackimage = ImageIO.read(file2);
+            currimage = image;
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+
+    }
+
+
 
 }
 
 class Head extends Enemy{
+
+    public Head(Screen s){
+
+        this.s = s;
+        health = 100;
+        maxHealth = 100;
+        damage = 30;
+        setPos();
+
+        speed=1;
+        attackSpeed = 2;
+        dir = "-";
+        hitbox = new Rectangle(9,15,13,17);
+
+        try {
+
+            File file = new File("resources/enemies/head.png");
+            File file2 = new File("resources/enemies/ghost-attack.png");
+            image = ImageIO.read(file);
+            attackimage = ImageIO.read(file2);
+            currimage = image;
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 
 }

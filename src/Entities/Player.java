@@ -14,10 +14,15 @@ import java.util.ArrayList;
 public class Player extends Entity{
 
     InputHandler k;
+    public BufferedImage weapon;
+    int attackCount = 0;
+    boolean attacking;
+    int damage;
 
     public Player(Screen s, InputHandler k){
         health = 100;
         maxHealth = 100;
+        damage = 5;
         this.s = s;
         this.k = k;
 
@@ -33,12 +38,25 @@ public class Player extends Entity{
 
     public void update(){
 
+        if(attacking == true){
+            doAttack();
+        }
+
+        getMove();
+
+        setAttacking();
+
+
+    }
+
+    // If movement keys entered, set direction, move player if not colliding.
+    public void getMove(){
+
         if(k.upPress == true || k.downPress == true || k.leftPress == true || k.rightPress == true) {
 
 
             collision = false;
             s.collision.checkTile(this);
-
 
             // Handle keyboard input
             if (k.upPress == true) {
@@ -50,7 +68,6 @@ public class Player extends Entity{
             } else if (k.rightPress == true) {
                 dir = "right";
             }
-
 
             if (collision == false) {
                 oX = x;
@@ -71,32 +88,40 @@ public class Player extends Entity{
                         break;
 
                 }
+
+                // Do sprite animation
+                animCount++;
+                if (animCount > 15) {
+                    if (animStep == 1) {
+                        animStep = 2;
+                    } else {
+                        animStep = 1;
+                    }
+                    animCount = 0;
+                }
+
             }else{
 
                 // Bounce back!
-
                 x = oX;
                 y=oY;
             }
 
-            // Do sprite animation
-            animCount++;
-            if (animCount > 15) {
-                if (animStep == 1) {
-                    animStep = 2;
-                } else {
-                    animStep = 1;
-                }
-                animCount = 0;
-            }
-
         }
-
-
     }
-    // Draw sprite based on directions going
+
+    // Set attacking if enter key pressed
+    public void setAttacking(){
+        if(k.enterPress == true){
+            attacking = true;
+        }
+    }
+
+    // Draw sprite based on directions going/action
     public void draw(Graphics2D g){
         BufferedImage img = null;
+
+        // Draw player
         switch(dir){
             case "up":
                 if(animStep == 1){
@@ -127,7 +152,26 @@ public class Player extends Entity{
                 }
                 break;
         }
+
         g.drawImage(img,x,y,s.tileSize,s.tileSize,null);
+
+        // Draw weapon on player
+        if(attacking == true){
+            switch(dir){
+                case "down":
+                    g.drawImage(downAttack,x+(22),y+(36),s.tileSize,s.tileSize,null);
+                    break;
+                case "up":
+                    g.drawImage(upAttack,x+(22),y+(36),s.tileSize,s.tileSize,null);
+                    break;
+                case "left":
+                    g.drawImage(leftAttack,x-(53),y+(9),s.tileSize,s.tileSize,null);
+                    break;
+                case "right":
+                    g.drawImage(rightAttack,x+(49),y+15,s.tileSize,s.tileSize,null);
+                    break;
+            }
+        }
 
         // Draw health bar
         double scale = (double)400/maxHealth;
@@ -145,6 +189,8 @@ public class Player extends Entity{
     public void getImage(){
 
         try{
+
+            // Moving images
             File file = new File("resources/player/frog_back1.png");
             up1 = ImageIO.read(file);
             file = new File("resources/player/frog_front1.png");
@@ -163,6 +209,16 @@ public class Player extends Entity{
             file = new File("resources/player/frog_right2.png");
             right2 = ImageIO.read(file);
 
+            // Attack images
+            file = new File("resources/weapons/sword.png");
+            downAttack = ImageIO.read(file);
+            file = new File("resources/weapons/swordup.png");
+            upAttack = ImageIO.read(file);
+            file = new File("resources/weapons/swordleft.png");
+            leftAttack = ImageIO.read(file);
+            file = new File("resources/weapons/swordright.png");
+            rightAttack = ImageIO.read(file);
+
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -172,6 +228,23 @@ public class Player extends Entity{
     public void getAttack(int dmg){
         // if not blocking, take damage
         health -= dmg;
+    }
+
+    // 25 frames of attack
+    public void doAttack(){
+
+        attackCount++;
+
+
+        if(attackCount > 25){
+            if (s.collision.getCollidingMonster(this) != null) {
+                Entity e = s.collision.getCollidingMonster(this);
+                e.updateHealth(-damage);
+            }
+            attackCount = 0;
+            attacking = false;
+        }
+
     }
 
 }
