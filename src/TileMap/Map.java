@@ -21,6 +21,7 @@ public class Map {
     int intmap[][];
     char charmap[][];
     public ArrayList<ArrayList<Tile>> tilemap;
+    public Tile portal;
 
     public Map(Screen s){
         this.s = s;
@@ -149,7 +150,6 @@ public class Map {
 
                 }
 
-
             }
         }
 
@@ -184,12 +184,29 @@ public class Map {
        return tile;
 
 
-
     }
+
 
     // -----------------------------------------------------------
 
+    public void addPortal(){
 
+        Tile t = getRandomPosition();
+        Tile p = new Portal();
+        p.x = t.x;
+        p.y = t.y;
+        for (int i = 0; i < s.screenCols; i++) {
+
+            for (int j = 0; j < s.screenRows; j++) {
+
+                if(tilemap.get(i).get(j).x == t.x && tilemap.get(i).get(j).y == t.y){
+                    tilemap.get(i).set(j, p);
+                }
+            }
+        }
+
+        portal = p;
+    }
 
 
 }

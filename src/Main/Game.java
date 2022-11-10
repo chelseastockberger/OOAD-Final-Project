@@ -68,13 +68,20 @@ public class Game {
 
     }
 
+    public void addPortal(){
+
+
+
+
+    }
+
     public void newLevel(){
 
         level++;
 
         screen.enemies = generateEnemies(level);
         screen.loadMap();
-
+        screen.player.setPos();
 
     }
 

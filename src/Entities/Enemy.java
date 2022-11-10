@@ -111,7 +111,6 @@ public abstract class Enemy extends Entity{
         if(attackCount >= 50){
             currimage = attackimage;
             attackCount = 0;
-            System.out.println("attacking");
             p.getAttack(damage);
         }
 

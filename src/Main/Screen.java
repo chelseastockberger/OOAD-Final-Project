@@ -31,6 +31,7 @@ public class Screen extends JPanel implements Runnable{
     int FPS = 60;
     ArrayList<Enemy> enemies;
     public Player player;
+    boolean portaladded = false;
 
 
 
@@ -90,7 +91,16 @@ public class Screen extends JPanel implements Runnable{
        }
 
        if(checkEnemiesDefeated()){
-           game.newLevel();
+           if(!portaladded)
+                addPortal();
+       }
+       if(portaladded){
+           if (player.x <= map.portal.x && player.x+tileSize >= map.portal.x && player.y <= map.portal.y && player.y+tileSize >= map.portal.y) {
+
+               portaladded = false;
+               game.newLevel();
+
+           }
        }
 
     }
@@ -134,6 +144,13 @@ public class Screen extends JPanel implements Runnable{
     public void loadMap(){
 
         map = new Map(this);
+
+    }
+
+    public void addPortal(){
+
+        map.addPortal();
+        portaladded = true;
 
     }
 
