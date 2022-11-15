@@ -100,6 +100,12 @@ class Corner extends Tile {
                 case 'K':
                     file = new File("resources/tiles/BRinner.png");
                     break;
+                case 'M':
+                    file = new File("resources/tiles/midHori.png");
+                    break;
+                case 'V':
+                    file = new File("resources/tiles/midVert.png");
+                    break;
             }
 
             image = ImageIO.read(file);

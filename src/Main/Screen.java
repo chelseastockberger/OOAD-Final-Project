@@ -94,10 +94,12 @@ public class Screen extends JPanel implements Runnable{
            }
        }
 
+       // If all enemies are defeated, add the portal
        if(checkEnemiesDefeated()){
            if(!portaladded)
                 addPortal();
        }
+       // If the portal is added, constantly check if the player walks over it
        if(portaladded){
            if (player.x <= map.portal.x && player.x+tileSize >= map.portal.x && player.y <= map.portal.y && player.y+tileSize >= map.portal.y) {
 
@@ -129,6 +131,7 @@ public class Screen extends JPanel implements Runnable{
 
     // Gameplay
 
+    // Check if all enemies defeated
     public boolean checkEnemiesDefeated(){
 
         int cnt = 0;

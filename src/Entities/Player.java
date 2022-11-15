@@ -31,7 +31,7 @@ public class Player extends Entity{
         speed=4;
         dir = "down";
 
-        hitbox = new Rectangle(9,15,13,17);
+        hitbox = new Rectangle(9*3,15*3,13*3,17*3);
 
         getImage();
     }

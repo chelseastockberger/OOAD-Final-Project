@@ -77,12 +77,6 @@ public class Game {
 
     }
 
-    public void addPortal(){
-
-
-
-
-    }
 
     public void newLevel(){
 

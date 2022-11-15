@@ -59,12 +59,23 @@ public class Map {
 
     }
 
+    File getRandomMap(){
+
+        int num = (int) ( Math.random() * 2 + 1); // will return either 1 or 2
+        char c = (char)(num + '0');
+        System.out.println(c);
+        File file = new File("resources/maps/rand" + c + ".txt");
+        return file;
+
+    }
+
     // Load map from text file, place it into intmap
     public void loadMap(){
 
         try{
 
-            File file = new File("resources/maps/rand1.txt");
+            //File file = new File("resources/maps/rand1.txt");
+            File file = getRandomMap();
             Scanner readFile = new Scanner(file);
 
             int col=0;
