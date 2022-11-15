@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import Entities.Enemy;
 import Entities.EnemyFactory;
 import Entities.Player;
+import Objects.GameObject;
 import TileMap.Map;
 
 public class Screen extends JPanel implements Runnable{
@@ -24,18 +25,18 @@ public class Screen extends JPanel implements Runnable{
 
     // Objects/variables
 
-    public Map map;
+    int FPS = 60;
     InputHandler input;
     public Collision collision;
     Thread thread;
     Audio audio;
 
-    int FPS = 60;
+    public Map map;
     ArrayList<Enemy> enemies;
+    ArrayList<GameObject> objects;
     public Player player;
+
     boolean portaladded = false;
-
-
 
     public Screen(Game g){
         this.game = g;
@@ -119,6 +120,10 @@ public class Screen extends JPanel implements Runnable{
 
         map.draw(g2D);
         player.draw(g2D);
+
+        for(GameObject o: objects){
+            o.draw(g2D);
+        }
 
         for(Enemy e: enemies){
             if(!e.isDead()){
