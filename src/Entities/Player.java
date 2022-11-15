@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import Main.Screen;
 import Main.InputHandler;
+import Objects.GameObject;
+
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -235,12 +237,21 @@ public class Player extends Entity{
 
         attackCount++;
 
-
         if(attackCount > 25){
+
+            // Check if hit monster
             if (s.collision.getCollidingMonster(this) != null) {
                 Entity e = s.collision.getCollidingMonster(this);
                 e.updateHealth(-damage);
             }
+
+            // Check if hit object
+            if (s.collision.checkObjects(this, true) != null) {
+                GameObject o = s.collision.checkObjects(this, true);
+                o.setDestroyed();
+
+            }
+
             attackCount = 0;
             attacking = false;
         }

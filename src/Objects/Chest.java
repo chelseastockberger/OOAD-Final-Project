@@ -18,6 +18,8 @@ public class Chest extends GameObject {
 
             File file = new File("resources/objects/chest.png");
             image = ImageIO.read(file);
+            file = new File("resources/objects/chest-open.png");
+            destroyedimage = ImageIO.read(file);
 
         }catch(IOException e){
             e.printStackTrace();

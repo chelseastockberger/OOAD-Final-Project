@@ -10,9 +10,11 @@ public class GameObject {
 
     public int x,y;
     public BufferedImage image;
+    public BufferedImage destroyedimage;
     public String name;
     public boolean collision = false;
     Screen s;
+    public boolean isDestroyed = false;
 
     public void setPos(){
         Tile pos = s.map.getRandomPosition();
@@ -20,9 +22,19 @@ public class GameObject {
         this.y = pos.y;
     }
 
+
     public void draw(Graphics2D g){
 
-        g.drawImage(image,x,y,s.tileSize,s.tileSize,null);
+        g.drawImage(image,x,y,image.getWidth()*3,image.getHeight()*3,null);
+
+    }
+
+    public void setDestroyed(){
+
+        this.isDestroyed = true;
+        this.image = destroyedimage;
+        this.collision = false;
+
 
     }
 

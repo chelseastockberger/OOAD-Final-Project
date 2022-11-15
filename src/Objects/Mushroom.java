@@ -19,6 +19,8 @@ public class Mushroom extends GameObject {
 
             File file = new File("resources/objects/magicshroom.png");
             image = ImageIO.read(file);
+            file = new File("resources/objects/magicshroom-broke.png");
+            destroyedimage = ImageIO.read(file);
 
         }catch(IOException e){
             e.printStackTrace();
