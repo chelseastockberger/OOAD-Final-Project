@@ -28,6 +28,8 @@ public class Screen extends JPanel implements Runnable{
     InputHandler input;
     public Collision collision;
     Thread thread;
+    Audio audio;
+
     int FPS = 60;
     ArrayList<Enemy> enemies;
     public Player player;
@@ -41,6 +43,8 @@ public class Screen extends JPanel implements Runnable{
         input = new InputHandler();
         collision = new Collision(this);
         player = new Player(this, input);
+        audio = new Audio();
+        playMusic();
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.white);
@@ -152,6 +156,11 @@ public class Screen extends JPanel implements Runnable{
         map.addPortal();
         portaladded = true;
 
+    }
+
+    public void playMusic(){
+        audio.play();
+        audio.loop();
     }
 
 
