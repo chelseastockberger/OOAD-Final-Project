@@ -9,6 +9,7 @@ public class StartMenu {
 
     JFrame frame = new JFrame();
     JButton button = new JButton(new ImageIcon("resources/icons/Start-Button-Vector-PNG.png"));
+    JLabel label = new JLabel("Controls: WASD to move, Enter to attack.");
 
 
     public void draw()
@@ -23,6 +24,8 @@ public class StartMenu {
         });
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(1536,950);
+        label.setBounds(650, 500, 300,300);
+        frame.add(label);
         frame.setLayout(null);
         frame.setVisible(true);
         frame.add(button);
