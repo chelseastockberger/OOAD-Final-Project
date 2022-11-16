@@ -1,20 +1,48 @@
 package Main;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-public class StartMenu {
+public class StartMenu{
 
     JFrame frame = new JFrame();
-    JButton button = new JButton(new ImageIcon("resources/icons/Start-Button-Vector-PNG.png"));
-    JLabel label = new JLabel("Controls: WASD to move, Enter to attack.");
+    JButton button;
+    BufferedImage img;
+    Image btnimg;
 
+    public StartMenu(){
+        try {
+            File file = new File("resources/icons/start_art.png");
+            img = ImageIO.read(file);
+            file = new File("resources/icons/button.png");
+            BufferedImage btnimgB = ImageIO.read(file);
+
+            btnimg = btnimgB.getScaledInstance(btnimgB.getWidth()*5, btnimgB.getHeight()*5, Image.SCALE_DEFAULT);
+            button = new JButton(new ImageIcon(btnimg));
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 
     public void draw()
     {
-        button.setBounds(650,700,232,112);
+
+        // Making the frame
+        Image img_ = img.getScaledInstance(img.getWidth()*5, img.getHeight()*5, Image.SCALE_DEFAULT);
+        JLabel label = new JLabel(new ImageIcon(img_));
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(label);
+        frame.pack();
+
+        // Add button
+        button.setBounds(55*5, 116*5, 450, 215);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -22,12 +50,17 @@ public class StartMenu {
                 frame.dispose();
             }
         });
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(1536,950);
-        label.setBounds(650, 500, 300,300);
-        frame.add(label);
-        frame.setLayout(null);
-        frame.setVisible(true);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+
         frame.add(button);
+        frame.getContentPane().add(button);
+        frame.setLayout(null);
+
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+
     }
 }
