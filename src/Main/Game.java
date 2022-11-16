@@ -2,7 +2,10 @@ package Main;
 import Entities.Enemy;
 import Entities.EnemyFactory;
 import Entities.Player;
+import Objects.GameObject;
+import Objects.ObjectFactory;
 import TileMap.Map;
+import TileMap.Tile;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -42,6 +45,7 @@ public class Game {
 
         screen = new Screen(this);
         screen.enemies = generateEnemies(1);
+        screen.objects = generateObjects(1);
 
         window.add(screen);
         window.pack();
@@ -77,20 +81,30 @@ public class Game {
 
     }
 
-    public void addPortal(){
-
-
-
-
-    }
 
     public void newLevel(){
 
         level++;
 
-        screen.enemies = generateEnemies(level);
         screen.loadMap();
+        screen.enemies = generateEnemies(level);
         screen.player.setPos();
+        screen.objects = generateObjects(level);
+
+    }
+
+    public ArrayList<GameObject> generateObjects(int level){
+
+        ArrayList<GameObject> objs = new ArrayList<>();
+
+        ObjectFactory obj = new ObjectFactory();
+        GameObject o1 = obj.getObject(screen,"chest");
+        GameObject o2 = obj.getObject(screen,"shroom");
+
+        objs.add(o1);
+        objs.add(o2);
+
+        return objs;
 
     }
 

@@ -2,6 +2,7 @@ package Main;
 
 import Entities.Enemy;
 import Entities.Entity;
+import Objects.GameObject;
 import TileMap.Tile;
 
 import static java.lang.Math.pow;
@@ -32,6 +33,21 @@ public class Collision {
                 }
 
 
+            }
+
+            return null;
+
+        }
+
+        public GameObject checkObjects(Entity player, boolean isPlayer){
+
+            int dist = s.tileSize;
+
+            for(GameObject o: s.objects){
+                double currDist = sqrt(pow((player.x - o.x),2) + pow((player.y - o.y),2));
+                if(currDist <= dist){
+                    return o;
+                }
             }
 
             return null;

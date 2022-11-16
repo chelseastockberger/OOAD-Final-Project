@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import Entities.Enemy;
 import Entities.EnemyFactory;
 import Entities.Player;
+import Objects.GameObject;
 import TileMap.Map;
 
 public class Screen extends JPanel implements Runnable{
@@ -24,16 +25,18 @@ public class Screen extends JPanel implements Runnable{
 
     // Objects/variables
 
-    public Map map;
+    int FPS = 60;
     InputHandler input;
     public Collision collision;
     Thread thread;
-    int FPS = 60;
+    Audio audio;
+
+    public Map map;
     ArrayList<Enemy> enemies;
+    ArrayList<GameObject> objects;
     public Player player;
+
     boolean portaladded = false;
-
-
 
     public Screen(Game g){
         this.game = g;
@@ -41,6 +44,8 @@ public class Screen extends JPanel implements Runnable{
         input = new InputHandler();
         collision = new Collision(this);
         player = new Player(this, input);
+        audio = new Audio();
+        playMusic();
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.white);
@@ -90,10 +95,12 @@ public class Screen extends JPanel implements Runnable{
            }
        }
 
+       // If all enemies are defeated, add the portal
        if(checkEnemiesDefeated()){
            if(!portaladded)
                 addPortal();
        }
+       // If the portal is added, constantly check if the player walks over it
        if(portaladded){
            if (player.x <= map.portal.x && player.x+tileSize >= map.portal.x && player.y <= map.portal.y && player.y+tileSize >= map.portal.y) {
 
@@ -114,6 +121,10 @@ public class Screen extends JPanel implements Runnable{
         map.draw(g2D);
         player.draw(g2D);
 
+        for(GameObject o: objects){
+            o.draw(g2D);
+        }
+
         for(Enemy e: enemies){
             if(!e.isDead()){
                 e.draw(g2D);
@@ -125,6 +136,7 @@ public class Screen extends JPanel implements Runnable{
 
     // Gameplay
 
+    // Check if all enemies defeated
     public boolean checkEnemiesDefeated(){
 
         int cnt = 0;
@@ -152,6 +164,11 @@ public class Screen extends JPanel implements Runnable{
         map.addPortal();
         portaladded = true;
 
+    }
+
+    public void playMusic(){
+        audio.play();
+        audio.loop();
     }
 
 

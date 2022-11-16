@@ -215,7 +215,7 @@ class Blob extends Enemy{
         try {
 
             File file = new File("resources/enemies/blob.png");
-            File file2 = new File("resources/enemies/ghost-attack.png");
+            File file2 = new File("resources/enemies/blob-attack.png");
             image = ImageIO.read(file);
             attackimage = ImageIO.read(file2);
             currimage = image;
