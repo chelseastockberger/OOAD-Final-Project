@@ -1,10 +1,12 @@
 package Objects;
 
+import Entities.Player;
 import Main.Screen;
 import TileMap.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class GameObject {
 
@@ -12,9 +14,13 @@ public class GameObject {
     public BufferedImage image;
     public BufferedImage destroyedimage;
     public String name;
-    public boolean collision = false;
+    public boolean collision = true;
     Screen s;
     public boolean isDestroyed = false;
+    String text[] = new String[5];
+
+    Weapons weapon = null;
+    Items item = null;
 
     public void setPos(){
         Tile pos = s.map.getRandomPosition();
@@ -29,12 +35,37 @@ public class GameObject {
 
     }
 
+    // Set object as destroyed, changes image, can collide now
     public void setDestroyed(){
 
         this.isDestroyed = true;
         this.image = destroyedimage;
         this.collision = false;
 
+
+    }
+
+    // Gives the item produced from the object to player
+    public void giveItemToPlayer(Player player){
+       if(weapon != null){
+            player.setWeapon(weapon);
+            text[2] = weapon.name;
+            text[3] = weapon.caption;
+       }else if(item != null){
+            player.addItem(item);
+            text[2] = item.name;
+            text[3] = item.caption;
+       }
+    }
+
+    public void write(){
+        s.ui.currtext = text[0];
+        s.ui.textIndex = 0;
+        s.ui.textArr = new ArrayList<>();
+
+        for(String str : text){
+            s.ui.textArr.add(str);
+        }
 
     }
 

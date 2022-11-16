@@ -4,7 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class InputHandler implements KeyListener {
-    public boolean upPress, downPress, leftPress, rightPress, enterPress;
+    public boolean upPress, downPress, leftPress, rightPress, enterPress, endDialogue;
+    public Screen s;
 
     @Override
     public void keyTyped(KeyEvent e){
@@ -15,41 +16,53 @@ public class InputHandler implements KeyListener {
     public void keyPressed(KeyEvent e){
         int c = e.getKeyCode();
 
-        if(c == KeyEvent.VK_W){
-            upPress = true;
+        if(s.state == s.default_state) {
+            if (c == KeyEvent.VK_W) {
+                upPress = true;
+            }
+            if (c == KeyEvent.VK_A) {
+                leftPress = true;
+            }
+            if (c == KeyEvent.VK_S) {
+                downPress = true;
+            }
+            if (c == KeyEvent.VK_D) {
+                rightPress = true;
+            }
+            if (c == KeyEvent.VK_ENTER) {
+                enterPress = true;
+            }
         }
-        if(c == KeyEvent.VK_A){
-            leftPress = true;
+        // Dialogue open
+
+        if(s.state == s.text_state){
+            if(c == KeyEvent.VK_ENTER){
+              endDialogue = true;
+            }
         }
-        if(c == KeyEvent.VK_S){
-            downPress = true;
-        }
-        if(c == KeyEvent.VK_D){
-            rightPress = true;
-        }
-        if(c == KeyEvent.VK_ENTER){
-            enterPress = true;
-        }
+
 
     }
     public void keyReleased(KeyEvent e){
         int c = e.getKeyCode();
 
-        if(c == KeyEvent.VK_W){
+
+        if (c == KeyEvent.VK_W) {
             upPress = false;
         }
-        if(c == KeyEvent.VK_A){
+        if (c == KeyEvent.VK_A) {
             leftPress = false;
         }
-        if(c == KeyEvent.VK_S){
+        if (c == KeyEvent.VK_S) {
             downPress = false;
         }
-        if(c == KeyEvent.VK_D){
+        if (c == KeyEvent.VK_D) {
             rightPress = false;
         }
-        if(c == KeyEvent.VK_ENTER){
+        if (c == KeyEvent.VK_ENTER) {
             enterPress = false;
         }
+
 
     }
 

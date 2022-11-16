@@ -1,6 +1,7 @@
 package Main;
 import javax.swing.JPanel;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import Entities.Enemy;
@@ -30,6 +31,7 @@ public class Screen extends JPanel implements Runnable{
     public Collision collision;
     Thread thread;
     Audio audio;
+    public Interface ui;
 
     public Map map;
     ArrayList<Enemy> enemies;
@@ -38,13 +40,25 @@ public class Screen extends JPanel implements Runnable{
 
     boolean portaladded = false;
 
+    // Game state
+    public int state;
+    public final int default_state = 1;
+    public final int pause_state = 2;
+    public final int text_state = 3;
+
+
+
     public Screen(Game g){
+
         this.game = g;
         map = new Map(this);
         input = new InputHandler();
+        input.s = this;
         collision = new Collision(this);
         player = new Player(this, input);
         audio = new Audio();
+        ui = new Interface(this);
+        state = default_state;
         playMusic();
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -87,33 +101,50 @@ public class Screen extends JPanel implements Runnable{
     // Update data
     public void update(){
 
-       player.update();
+        if(state == text_state) {
 
-       for(Enemy e: enemies){
-           if(!e.isDead()){
-               e.update();
-           }
-       }
+            // If enter pressed, scroll through dialogue. Once no more dialogue, UI closed
+            if(input.endDialogue){
+                ui.textIndex = ui.textIndex+1;
+                if(ui.textArr.get(ui.textIndex) != null){
+                    ui.currtext = ui.textArr.get(ui.textIndex);
+                }else{
+                    state = default_state;
+                }
+                input.endDialogue = false;
+            }
 
-       // If all enemies are defeated, add the portal
-       if(checkEnemiesDefeated()){
-           if(!portaladded)
-                addPortal();
-       }
-       // If the portal is added, constantly check if the player walks over it
-       if(portaladded){
-           if (player.x <= map.portal.x && player.x+tileSize >= map.portal.x && player.y <= map.portal.y && player.y+tileSize >= map.portal.y) {
 
-               portaladded = false;
-               game.newLevel();
+        }else {
+            player.update();
 
-           }
-       }
+            for (Enemy e : enemies) {
+                if (!e.isDead()) {
+                    e.update();
+                }
+            }
+
+            // If all enemies are defeated, add the portal
+            if (checkEnemiesDefeated()) {
+                if (!portaladded)
+                    addPortal();
+            }
+            // If the portal is added, constantly check if the player walks over it
+            if (portaladded) {
+                if (player.x <= map.portal.x && player.x + tileSize >= map.portal.x && player.y <= map.portal.y && player.y + tileSize >= map.portal.y) {
+
+                    portaladded = false;
+                    game.newLevel();
+
+                }
+            }
+        }
 
     }
 
     // Add data to screen
     public void paintComponent(Graphics g){
+
         super.paintComponent(g);
 
         Graphics2D g2D = (Graphics2D)g;
@@ -130,6 +161,8 @@ public class Screen extends JPanel implements Runnable{
                 e.draw(g2D);
             }
         }
+
+        ui.draw(g2D);
 
         g2D.dispose();
     }

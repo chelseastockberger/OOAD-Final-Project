@@ -31,21 +31,20 @@ public class Collision {
                 if(currDist <= dist){
                     return e;
                 }
-
-
             }
 
             return null;
 
         }
 
-        public GameObject checkObjects(Entity player, boolean isPlayer){
+        public GameObject checkObjects(Entity player){
 
             int dist = s.tileSize;
 
             for(GameObject o: s.objects){
                 double currDist = sqrt(pow((player.x - o.x),2) + pow((player.y - o.y),2));
-                if(currDist <= dist){
+                if(currDist <= dist && o.collision){
+                    player.collision = true;
                     return o;
                 }
             }

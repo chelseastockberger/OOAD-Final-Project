@@ -8,6 +8,9 @@ import java.io.IOException;
 import Main.Screen;
 import Main.InputHandler;
 import Objects.GameObject;
+import Objects.ItemWeaponFactory;
+import Objects.Items;
+import Objects.Weapons;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -16,17 +19,23 @@ import java.util.ArrayList;
 public class Player extends Entity{
 
     InputHandler k;
-    public BufferedImage weapon;
     int attackCount = 0;
     boolean attacking;
     int damage;
+    ArrayList<Items> items;
+    Weapons weapon;
 
     public Player(Screen s, InputHandler k){
+
         health = 100;
         maxHealth = 100;
-        damage = 5;
         this.s = s;
         this.k = k;
+
+        ItemWeaponFactory w = new ItemWeaponFactory();
+        weapon = w.getWeapon(4);
+        this.damage = weapon.damage;
+        this.items= new ArrayList<>();
 
         setPos();
 
@@ -36,6 +45,13 @@ public class Player extends Entity{
         hitbox = new Rectangle(9*3,15*3,13*3,17*3);
 
         getImage();
+    }
+
+    public void setWeapon(Weapons w){
+        this.weapon = w;
+    }
+    public void addItem(Items i){
+        items.add(i);
     }
 
     public void update(){
@@ -48,7 +64,6 @@ public class Player extends Entity{
 
         setAttacking();
 
-
     }
 
     // If movement keys entered, set direction, move player if not colliding.
@@ -59,6 +74,7 @@ public class Player extends Entity{
 
             collision = false;
             s.collision.checkTile(this);
+            s.collision.checkObjects(this);
 
             // Handle keyboard input
             if (k.upPress == true) {
@@ -188,6 +204,8 @@ public class Player extends Entity{
         g.fillRect(25, 25, (int)hpBar, 20);
 
     }
+
+    // Get images
     public void getImage(){
 
         try{
@@ -227,12 +245,13 @@ public class Player extends Entity{
 
     }
 
+    // Take damage
     public void getAttack(int dmg){
         // if not blocking, take damage
         health -= dmg;
     }
 
-    // 25 frames of attack
+    // 25 frames of attack, runs when attacking is true, only does attack once 25 ms passed
     public void doAttack(){
 
         attackCount++;
@@ -246,15 +265,22 @@ public class Player extends Entity{
             }
 
             // Check if hit object
-            if (s.collision.checkObjects(this, true) != null) {
-                GameObject o = s.collision.checkObjects(this, true);
-                o.setDestroyed();
-
+            if (s.collision.checkObjects(this) != null) {
+                interactObject();
             }
 
             attackCount = 0;
             attacking = false;
         }
+
+    }
+
+    void interactObject(){
+        GameObject o = s.collision.checkObjects(this);
+        o.giveItemToPlayer(this);
+        s.state = s.text_state;
+        o.write();
+        o.setDestroyed();
 
     }
 
