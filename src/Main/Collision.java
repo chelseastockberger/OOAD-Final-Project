@@ -44,7 +44,6 @@ public class Collision {
             for(GameObject o: s.objects){
                 double currDist = sqrt(pow((player.x - o.x),2) + pow((player.y - o.y),2));
                 if(currDist <= dist && o.collision){
-                    player.collision = true;
                     return o;
                 }
             }

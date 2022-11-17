@@ -27,6 +27,7 @@ public class Entity {
         Tile pos = s.map.getRandomPosition();
         this.x = pos.x;
         this.y = pos.y;
+
     }
 
     public boolean isDead(){

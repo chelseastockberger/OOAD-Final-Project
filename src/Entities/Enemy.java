@@ -27,7 +27,7 @@ public abstract class Enemy extends Entity{
 
         collision = false;
         s.collision.checkTile(this);
-        s.collision.checkObjects(this);
+        //s.collision.checkObjects(this);
         String dirs[] = {"up","down","left","right"};
 
         animCount++;

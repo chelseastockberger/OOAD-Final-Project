@@ -83,7 +83,7 @@ public class Player extends Entity{
 
             collision = false;
             s.collision.checkTile(this);
-            s.collision.checkObjects(this);
+            //s.collision.checkObjects(this);
 
             // Handle keyboard input
             if (k.upPress == true) {
@@ -191,6 +191,21 @@ public class Player extends Entity{
                     g.drawImage(rightAttack,x+(49),y+15,s.tileSize,s.tileSize,null);
                     break;
             }
+        }
+
+        // Draw on hat
+        boolean ownsHat = false;
+        BufferedImage hat = null;
+        if(!items.isEmpty()){
+            for(Items i: items){
+                if(i.name == "Cool Hat"){
+                    ownsHat=true;
+                    hat = i.image;
+                }
+            }
+        }
+        if(ownsHat){
+            g.drawImage(hat, x,y,s.tileSize/2,s.tileSize/2,null);
         }
 
     }

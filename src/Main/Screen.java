@@ -117,6 +117,7 @@ public class Screen extends JPanel implements Runnable{
 
 
         }else {
+
             player.update();
 
             for (Enemy e : enemies) {
@@ -151,7 +152,6 @@ public class Screen extends JPanel implements Runnable{
         Graphics2D g2D = (Graphics2D)g;
 
         map.draw(g2D);
-        player.draw(g2D);
 
         for(GameObject o: objects){
             o.draw(g2D);
@@ -162,6 +162,8 @@ public class Screen extends JPanel implements Runnable{
                 e.draw(g2D);
             }
         }
+
+        player.draw(g2D);
 
         ui.draw(g2D);
         scUI.draw(g2D);

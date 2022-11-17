@@ -74,8 +74,8 @@ public class Map {
 
         try{
 
-            //File file = new File("resources/maps/rand1.txt");
-            File file = getRandomMap();
+            File file = new File("resources/maps/rand1.txt");
+            //File file = getRandomMap();
             Scanner readFile = new Scanner(file);
 
             int col=0;

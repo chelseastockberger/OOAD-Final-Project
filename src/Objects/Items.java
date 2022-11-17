@@ -2,7 +2,10 @@ package Objects;
 
 import Entities.Player;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public abstract class Items {
 
@@ -45,6 +48,14 @@ class Hat extends Items {
     public Hat(){
         name = "Cool Hat";
         caption = "You put on a cool hat. Damage received reduced by 2 pts!";
+
+        try {
+            File file = new File("resources/objects/hat.png");
+            image = ImageIO.read(file);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
     }
 
     public void giveEffect(){

@@ -29,14 +29,14 @@ public class Game {
     // Make new screen
     public void newGame(){
 
-        StartMenu startMenu = new StartMenu();
-        startMenu.draw();
+        //StartMenu startMenu = new StartMenu();
+        //startMenu.draw();
 
         // Hacky way to wait until the start window is closed
-        while (startMenu.frame.isDisplayable())
-        {
+        //while (startMenu.frame.isDisplayable())
+        //{
 
-        }
+        //}
 
         window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
