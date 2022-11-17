@@ -24,7 +24,7 @@ public class Game {
 
     Screen screen;
     JFrame window;
-    int level = 0;
+    public int level = 0;
 
     // Make new screen
     public void newGame(){

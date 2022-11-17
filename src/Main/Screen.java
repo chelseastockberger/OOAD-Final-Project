@@ -12,7 +12,7 @@ import TileMap.Map;
 
 public class Screen extends JPanel implements Runnable{
 
-    Game game;
+    public Game game;
 
     // Settings for the window screen
 

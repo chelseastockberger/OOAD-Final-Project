@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class Player extends Entity{
 
     InputHandler k;
+    BufferedImage levelimg;
     int attackCount = 0;
     int blockCount = 0;
     boolean attacking;
@@ -198,11 +199,20 @@ public class Player extends Entity{
 
         // Outline
         g.setColor(new Color(139, 186, 101));
-        g.fillRect(22, 22, 405, 25);
+        g.fillRect(22, 45, 405, 25);
 
         // Fill red
         g.setColor(new Color(255,30,0));
-        g.fillRect(25, 25, (int)hpBar, 20);
+        g.fillRect(25, 48, (int)hpBar, 20);
+
+        // Draw current level
+        Font font = new Font("Serif", Font.PLAIN, 35);
+
+        g.setFont(font);
+        int lvl = s.game.level+1;
+        g.setColor(new Color(143, 151, 74));
+        g.drawString(""+lvl, 185,38);
+        g.drawImage(levelimg,5,3,s.tileSize*2,s.tileSize/2,null);
 
     }
 
@@ -239,6 +249,10 @@ public class Player extends Entity{
             leftAttack = ImageIO.read(file);
             file = new File("resources/weapons/swordright.png");
             rightAttack = ImageIO.read(file);
+
+            // Level img
+            file = new File("resources/icons/level.png");
+            levelimg = ImageIO.read(file);
 
         }catch(IOException e){
             e.printStackTrace();
