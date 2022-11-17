@@ -49,9 +49,8 @@ public abstract class Enemy extends Entity{
             doAttack(s.player);
         }
 
-
-
     }
+
     // Draw sprite based on directions going
     public void draw(Graphics2D g){
 
@@ -167,7 +166,7 @@ class Ghost extends Enemy {
         setPos();
 
         speed=1;
-        attackSpeed = 2;
+        attackSpeed = 1;
         dir = "-";
         hitbox = new Rectangle(9,15,13,17);
 
@@ -199,7 +198,7 @@ class Blob extends Enemy{
         setPos();
 
         speed=1;
-        attackSpeed = 2;
+        attackSpeed = 1;
         dir = "-";
         hitbox = new Rectangle(9,15,13,17);
 

@@ -25,12 +25,15 @@ public class Tile {
 
     }
 
+
 }
 
 class Blank extends Tile {
 
 
     public Blank(){
+
+        collision = true;
 
         try {
 
@@ -41,6 +44,7 @@ class Blank extends Tile {
             e.printStackTrace();
         }
     }
+
 
 
 }
@@ -190,78 +194,6 @@ class Right extends Tile {
 
 }
 
-class TopLeftCorner extends Tile {
-
-    public TopLeftCorner(){
-        collision = true;
-        try {
-
-            File file = new File("resources/tiles/grass_edge-TL.png");
-            image = ImageIO.read(file);
-
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-
-
-}
-class TopRightCorner extends Tile {
-
-    public TopRightCorner(){
-        collision = true;
-        try {
-
-            File file = new File("resources/tiles/grass_edge-TR.png");
-            image = ImageIO.read(file);
-
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-
-
-}
-class BottomLeftCorner extends Tile {
-
-    public BottomLeftCorner(){
-        collision = true;
-        try {
-
-            File file = new File("resources/tiles/grass_edge-BL.png");
-            image = ImageIO.read(file);
-
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-
-
-}
-class BottomRightCorner extends Tile {
-
-    public BottomRightCorner(){
-        collision = true;
-        try {
-
-            File file = new File("resources/tiles/grass_edge-BR.png");
-            image = ImageIO.read(file);
-
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-
-
-}
 
 class Portal extends Tile {
 

@@ -7,6 +7,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/*
+ITEMS
+Items that the player obtains and affects the player in
+distinct ways
+ */
+
 public abstract class Items {
 
     Player player;

@@ -3,26 +3,27 @@ package Main;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Interface {
+/*
+DIALOGUE
+Shows text provided by given scenario, such as:
+Obtaining item/weapon from an object
+
+ */
+public class Dialogue {
 
     Screen s;
     Graphics2D g;
     Font font, bigfont;
     public String text = "";
     public String currtext = "";
-    //public String textArr[];
     public ArrayList<String> textArr;
     public int textIndex;
 
-    public Interface(Screen s){
+    public Dialogue(Screen s){
         this.s = s;
 
         font = new Font("Arial", Font.PLAIN, 20);
         bigfont = new Font("Arial", Font.BOLD,80);
-    }
-
-    public void showText(String text){
-        this.text = text;
     }
 
     public void draw(Graphics2D g){
@@ -45,6 +46,7 @@ public class Interface {
 
     }
 
+    // Sets variables for text to appear
     public void textInterface(){
         int y = s.screenHeight - s.tileSize*3;
         int width = s.screenWidth - (s.tileSize * 6);
@@ -60,6 +62,7 @@ public class Interface {
 
     }
 
+    // Draws on the text to the interface
     public void textWindow(int x,int y, int width, int height){
 
         Color c = new Color(10, 22, 5, 157);

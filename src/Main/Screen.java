@@ -1,14 +1,20 @@
 package Main;
 import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import Entities.Enemy;
-import Entities.EnemyFactory;
 import Entities.Player;
 import Objects.GameObject;
 import TileMap.Map;
+
+/*
+SCREEN
+The beef of the program.
+Runs the main game thread, updating all entities and things.
+Holds most game control and elements.
+Draws all the elements
+ */
 
 public class Screen extends JPanel implements Runnable{
 
@@ -31,7 +37,7 @@ public class Screen extends JPanel implements Runnable{
     public Collision collision;
     Thread thread;
     Audio audio;
-    public Interface ui;
+    public Dialogue ui;
     ScreenUI scUI = new ScreenUI(this);
 
     public Map map;
@@ -58,7 +64,7 @@ public class Screen extends JPanel implements Runnable{
         collision = new Collision(this);
         player = new Player(this, input);
         audio = new Audio();
-        ui = new Interface(this);
+        ui = new Dialogue(this);
         state = default_state;
         playMusic();
 

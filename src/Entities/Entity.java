@@ -17,6 +17,7 @@ public class Entity {
 
     public BufferedImage up1,down1,left1,right1,up2,down2,left2,right2;
     public BufferedImage upAttack, downAttack, leftAttack, rightAttack;
+    public BufferedImage upBlock, block;
     public String dir;
     public Rectangle hitbox;
     public int animCount = 0;

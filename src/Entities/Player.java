@@ -139,9 +139,10 @@ public class Player extends Entity{
 
     // Draw sprite based on directions going/action
     public void draw(Graphics2D g){
+
         BufferedImage img = null;
 
-        // Draw player
+        // Draw player moving
         switch(dir){
             case "up":
                 if(animStep == 1){
@@ -175,25 +176,41 @@ public class Player extends Entity{
 
         g.drawImage(img,x,y,s.tileSize,s.tileSize,null);
 
-        // Draw weapon on player
-        if(attacking == true){
+        // Draw weapon on player, if attacking, or shield if blocking
+        if(attacking == true || blocking == true){
             switch(dir){
                 case "down":
-                    g.drawImage(downAttack,x+(22),y+(36),s.tileSize,s.tileSize,null);
+                    if(attacking) {
+                        g.drawImage(downAttack, x + (22), y + (36), s.tileSize, s.tileSize, null);
+                    }else{
+                        g.drawImage(block, x + (37), y + (36), s.tileSize/2, s.tileSize/2, null);
+                    }
                     break;
                 case "up":
-                    g.drawImage(upAttack,x+(22),y+(36),s.tileSize,s.tileSize,null);
+                    if(attacking) {
+                        g.drawImage(upAttack, x + (22), y + (36), s.tileSize, s.tileSize, null);
+                    }else{
+                        g.drawImage(upBlock, x + (63), y+34, s.tileSize/2, s.tileSize/2, null);
+                    }
                     break;
                 case "left":
-                    g.drawImage(leftAttack,x-(53),y+(9),s.tileSize,s.tileSize,null);
+                    if(attacking) {
+                        g.drawImage(leftAttack, x - (53), y + (9), s.tileSize, s.tileSize, null);
+                    }else{
+                        g.drawImage(block, x - (20), y + (36), s.tileSize/2, s.tileSize/2, null);
+                    }
                     break;
                 case "right":
-                    g.drawImage(rightAttack,x+(49),y+15,s.tileSize,s.tileSize,null);
+                    if(attacking) {
+                        g.drawImage(rightAttack, x + (49), y + 15, s.tileSize, s.tileSize, null);
+                    }else{
+                        g.drawImage(block, x + (45), y + (36), s.tileSize/2, s.tileSize/2, null);
+                    }
                     break;
             }
         }
 
-        // Draw on hat
+        // Draw on hat, is has hat
         boolean ownsHat = false;
         BufferedImage hat = null;
         if(!items.isEmpty()){
@@ -247,6 +264,13 @@ public class Player extends Entity{
             // Level img
             file = new File("resources/icons/level.png");
             levelimg = ImageIO.read(file);
+
+            // Blocking image
+            file = new File("resources/weapons/shield-up.png");
+            upBlock = ImageIO.read(file);
+            file = new File("resources/weapons/shield.png");
+            block = ImageIO.read(file);
+
 
         }catch(IOException e){
             e.printStackTrace();

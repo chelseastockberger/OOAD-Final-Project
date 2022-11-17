@@ -7,6 +7,11 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
+/*
+AUDIO
+Handles the music that plays
+
+ */
 public class Audio {
 
     Clip sound;
@@ -18,9 +23,10 @@ public class Audio {
 
        setAudio();
 
-       setVolume((float) 0.2);
+       setVolume((float) 0.1);
     }
 
+    // Sets the audio
     public void setAudio(){
         try{
             AudioInputStream a = AudioSystem.getAudioInputStream(music);
@@ -31,6 +37,7 @@ public class Audio {
         }
     }
 
+    // Basic functions
     public void play(){
         sound.start();
     }
@@ -42,12 +49,12 @@ public class Audio {
     }
 
 
-
     public float getVolume() {
         FloatControl gainControl = (FloatControl) sound.getControl(FloatControl.Type.MASTER_GAIN);
         return (float) Math.pow(10f, gainControl.getValue() / 20f);
     }
 
+    // Set volume
     public void setVolume(float volume) {
         if (volume < 0f || volume > 1f)
             throw new IllegalArgumentException("Volume not valid: " + volume);

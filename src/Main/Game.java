@@ -10,6 +10,14 @@ import TileMap.Tile;
 import javax.swing.*;
 import java.util.ArrayList;
 
+/*
+GAME
+Singleton for managing starting new game,
+generating enemies and objects,
+and new level
+
+ */
+
 public class Game {
 
 
@@ -54,6 +62,7 @@ public class Game {
 
     }
 
+    // Based on the level, generate enemies
     public ArrayList<Enemy> generateEnemies(int level){
 
         ArrayList<Enemy> enemies = new ArrayList<>();
@@ -81,7 +90,7 @@ public class Game {
 
     }
 
-
+    // Starts a new level, sets screen enemies, player pos, and has it load new map
     public void newLevel(){
 
         level++;
@@ -93,6 +102,7 @@ public class Game {
 
     }
 
+    // Generate objects
     public ArrayList<GameObject> generateObjects(int level){
 
         ArrayList<GameObject> objs = new ArrayList<>();

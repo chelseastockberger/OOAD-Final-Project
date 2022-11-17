@@ -6,6 +6,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/*
+SCREENUI
+Displays the UI on the screen, such as the weapon, health, etc
+ */
+
 public class ScreenUI {
 
     Screen s;

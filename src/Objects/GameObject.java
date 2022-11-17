@@ -8,6 +8,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+/*
+GAMEOBJECT
+Interactable objects places on the map.
+Once interacted with, player obtains weapon/item that the object held.
+ */
+
 public class GameObject {
 
     public int x,y;
@@ -60,6 +66,7 @@ public class GameObject {
        }
     }
 
+    // Sets dialogue text
     public void write(){
         s.ui.currtext = text[0];
         s.ui.textIndex = 0;

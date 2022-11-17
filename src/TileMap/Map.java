@@ -9,8 +9,12 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.util.ArrayList;
 
-// 1 - blank grass | 2 - top | 3 - bottom | 4 - left | 5 - right
-
+/*
+MAP
+Handles reading in the txt file, creating tilemap from that,
+getting a random position on the map, getting the tile at a certain coordinate,
+and adding in  a portal
+ */
 
 // This version uses premade maps made in txt file
 

@@ -9,6 +9,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/*
+STARTMENU
+What appears when you load up the game.
+ */
+
 public class StartMenu{
 
     JFrame frame = new JFrame();
