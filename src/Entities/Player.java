@@ -27,7 +27,7 @@ public class Player extends Entity{
     public int damage;
     public int defense;
     ArrayList<Items> items;
-    Weapons weapon;
+    public Weapons weapon;
 
     public Player(Screen s, InputHandler k){
 
@@ -192,27 +192,6 @@ public class Player extends Entity{
                     break;
             }
         }
-
-        // Draw health bar
-        double scale = (double)400/maxHealth;
-        double hpBar = scale*health;
-
-        // Outline
-        g.setColor(new Color(139, 186, 101));
-        g.fillRect(22, 45, 405, 25);
-
-        // Fill red
-        g.setColor(new Color(255,30,0));
-        g.fillRect(25, 48, (int)hpBar, 20);
-
-        // Draw current level
-        Font font = new Font("Serif", Font.PLAIN, 35);
-
-        g.setFont(font);
-        int lvl = s.game.level+1;
-        g.setColor(new Color(143, 151, 74));
-        g.drawString(""+lvl, 185,38);
-        g.drawImage(levelimg,5,3,s.tileSize*2,s.tileSize/2,null);
 
     }
 

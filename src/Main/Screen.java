@@ -32,6 +32,7 @@ public class Screen extends JPanel implements Runnable{
     Thread thread;
     Audio audio;
     public Interface ui;
+    ScreenUI scUI = new ScreenUI(this);
 
     public Map map;
     ArrayList<Enemy> enemies;
@@ -163,6 +164,8 @@ public class Screen extends JPanel implements Runnable{
         }
 
         ui.draw(g2D);
+        scUI.draw(g2D);
+
 
         g2D.dispose();
     }
