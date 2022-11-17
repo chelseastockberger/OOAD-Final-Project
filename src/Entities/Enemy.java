@@ -63,26 +63,12 @@ public abstract class Enemy extends Entity{
         double hpBar = scale*health;
 
         // Outline
-        g.setColor(new Color(139, 186, 101));
-        g.fillRect(x-1, y-16, s.tileSize+2, 12);
+        g.setColor(new Color(21, 35, 10));
+        g.fillRect(x-1, y-16, s.tileSize+2, 10);
 
         // Fill red
         g.setColor(new Color(255,30,0));
-        g.fillRect(x, y-15, (int)hpBar, 12);
-
-    }
-
-    // Check if close to player
-    public boolean checkRangetoPlayer(Player p){
-        // If certain dist away from player (size of 3 tile), move towards
-        int dist = s.tileSize*3;
-        double currDist = sqrt(pow((p.x - x),2) + pow((p.y - y),2));
-
-        if(currDist <= dist){
-            return true;
-        }else{
-            return false;
-        }
+        g.fillRect(x, y-15, (int)hpBar, 10);
 
     }
 

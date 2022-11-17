@@ -12,8 +12,8 @@ public class Entity {
     int oX, oY;
     public int speed;
     Screen s;
-    int health;
-    int maxHealth;
+    public int health;
+    public int maxHealth;
 
     public BufferedImage up1,down1,left1,right1,up2,down2,left2,right2;
     public BufferedImage upAttack, downAttack, leftAttack, rightAttack;

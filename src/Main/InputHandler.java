@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class InputHandler implements KeyListener {
-    public boolean upPress, downPress, leftPress, rightPress, enterPress, endDialogue;
+    public boolean upPress, downPress, leftPress, rightPress, enterPress, shiftPress, endDialogue;
     public Screen s;
 
     @Override
@@ -31,6 +31,9 @@ public class InputHandler implements KeyListener {
             }
             if (c == KeyEvent.VK_ENTER) {
                 enterPress = true;
+            }
+            if (c == KeyEvent.VK_SHIFT) {
+                shiftPress = true;
             }
         }
         // Dialogue open
@@ -61,6 +64,9 @@ public class InputHandler implements KeyListener {
         }
         if (c == KeyEvent.VK_ENTER) {
             enterPress = false;
+        }
+        if (c == KeyEvent.VK_SHIFT) {
+            shiftPress = false;
         }
 
 

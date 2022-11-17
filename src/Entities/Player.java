@@ -20,8 +20,11 @@ public class Player extends Entity{
 
     InputHandler k;
     int attackCount = 0;
+    int blockCount = 0;
     boolean attacking;
-    int damage;
+    boolean blocking;
+    public int damage;
+    public int defense;
     ArrayList<Items> items;
     Weapons weapon;
 
@@ -29,6 +32,7 @@ public class Player extends Entity{
 
         health = 100;
         maxHealth = 100;
+        defense = 0;
         this.s = s;
         this.k = k;
 
@@ -59,10 +63,14 @@ public class Player extends Entity{
         if(attacking == true){
             doAttack();
         }
+        if(blocking == true){
+            doBlock();
+        }
 
         getMove();
 
         setAttacking();
+        setBlocking();
 
     }
 
@@ -125,13 +133,6 @@ public class Player extends Entity{
                 y=oY;
             }
 
-        }
-    }
-
-    // Set attacking if enter key pressed
-    public void setAttacking(){
-        if(k.enterPress == true){
-            attacking = true;
         }
     }
 
@@ -245,10 +246,26 @@ public class Player extends Entity{
 
     }
 
+    // Set attacking if enter key pressed
+    public void setAttacking(){
+        if(k.enterPress == true){
+            attacking = true;
+        }
+    }
+    // Set blocking if shift key pressed
+    public void setBlocking(){
+        if(k.shiftPress == true){
+            blocking = true;
+        }
+    }
+
+
     // Take damage
     public void getAttack(int dmg){
         // if not blocking, take damage
-        health -= dmg;
+        if(!blocking) {
+            health -= (dmg - defense);
+        }
     }
 
     // 25 frames of attack, runs when attacking is true, only does attack once 25 ms passed
@@ -272,7 +289,14 @@ public class Player extends Entity{
             attackCount = 0;
             attacking = false;
         }
-
+    }
+    // Do 25 ms of blocking, then set to false
+    public void doBlock(){
+        blockCount++;
+        if(blockCount > 25){
+            blockCount = 0;
+            blocking = false;
+        }
     }
 
     void interactObject(){

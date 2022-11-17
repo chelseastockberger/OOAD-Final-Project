@@ -53,6 +53,8 @@ public class GameObject {
             text[3] = weapon.caption;
        }else if(item != null){
             player.addItem(item);
+            item.player = player;
+            item.giveEffect();
             text[2] = item.name;
             text[3] = item.caption;
        }
