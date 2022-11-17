@@ -50,8 +50,8 @@ public class ScreenUI {
 
 
             // Fill red
-            g.setColor(new Color(255,30,0));
-            g.fillRect(140, s.screenHeight-140, (int)hpBar, 20);
+            g.setColor(new Color(153, 50, 39));
+            g.fillRect(140, s.screenHeight-145, (int)hpBar, 20);
 
         // Draw current level
         Font font = new Font("Serif", Font.PLAIN, 35);

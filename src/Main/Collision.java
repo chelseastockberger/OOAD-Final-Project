@@ -37,6 +37,18 @@ public class Collision {
 
         }
 
+    public boolean getIsPlayerColliding(Entity e){
+
+        int dist = s.tileSize;
+        double currDist = sqrt(pow((s.player.x - e.x),2) + pow((s.player.y - e.y),2));
+        if(currDist <= dist){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
         public GameObject checkObjects(Entity player){
 
             int dist = s.tileSize;

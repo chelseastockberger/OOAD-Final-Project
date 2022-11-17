@@ -57,18 +57,22 @@ public abstract class Enemy extends Entity{
 
         g.drawImage(currimage,x,y,s.tileSize,s.tileSize,null);
 
+        // Draw health bar if player is colliding
+        if(s.collision.getIsPlayerColliding(this)) {
 
-        // Draw HP bars
-        double scale = (double)s.tileSize/maxHealth;
-        double hpBar = scale*health;
+            // Draw HP bars
+            double scale = (double) 73 / maxHealth;
+            double hpBar = scale * health;
 
-        // Outline
-        g.setColor(new Color(21, 35, 10));
-        g.fillRect(x-1, y-16, s.tileSize+2, 10);
+            // Outline
+            g.setColor(new Color(21, 35, 10));
+            g.fillRect(x + 12, y - 15, 73, 10);
 
-        // Fill red
-        g.setColor(new Color(255,30,0));
-        g.fillRect(x, y-15, (int)hpBar, 10);
+            // Fill red
+            g.setColor(new Color(144, 50, 40));
+            g.fillRect(x + 12, y - 15, (int) hpBar, 10);
+
+        }
 
     }
 

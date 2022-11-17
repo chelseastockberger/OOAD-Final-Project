@@ -165,8 +165,8 @@ public class Screen extends JPanel implements Runnable{
 
         player.draw(g2D);
 
-        ui.draw(g2D);
         scUI.draw(g2D);
+        ui.draw(g2D);
 
 
         g2D.dispose();
