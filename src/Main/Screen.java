@@ -1,5 +1,5 @@
 package Main;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -53,6 +53,8 @@ public class Screen extends JPanel implements Runnable{
     public final int pause_state = 2;
     public final int text_state = 3;
 
+    JFrame window;
+
 
 
     public Screen(Game g){
@@ -103,6 +105,7 @@ public class Screen extends JPanel implements Runnable{
                 delta--;
             }
         }
+        audio.stop();
     }
 
     // Update data
@@ -125,6 +128,16 @@ public class Screen extends JPanel implements Runnable{
         }else {
 
             player.update();
+
+            // Check if the player is alive
+            if (player.health <= 0)
+            {
+                game.window.dispose();
+                thread = null;
+                EndMenu endMenu = new EndMenu();
+                endMenu.draw();
+                return;
+            }
 
             for (Enemy e : enemies) {
                 if (!e.isDead()) {

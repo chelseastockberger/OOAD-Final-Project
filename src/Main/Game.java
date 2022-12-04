@@ -37,14 +37,34 @@ public class Game {
     // Make new screen
     public void newGame(){
 
-        //StartMenu startMenu = new StartMenu();
-        //startMenu.draw();
+        StartMenu startMenu = new StartMenu();
+        startMenu.draw();
 
-        // Hacky way to wait until the start window is closed
-        //while (startMenu.frame.isDisplayable())
-        //{
+        //Hacky way to wait until the start window is closed
+        while (startMenu.frame.isDisplayable())
+        {
 
-        //}
+        }
+
+        window = new JFrame();
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(false);
+        window.setTitle("Adventure");
+
+        screen = new Screen(this);
+        screen.enemies = generateEnemies(1);
+        screen.objects = generateObjects(1);
+
+        window.add(screen);
+        window.pack();
+        window.setVisible(true);
+        screen.startThread();
+
+    }
+
+    public void restartGame(){
+
+
 
         window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
