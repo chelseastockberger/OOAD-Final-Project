@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 - Patterns -
 Factory: Make Items/Weapons, Make Tiles, Make Enemies
 Singleton: Game
-State: Screen?
+State: State, textState, etc...
 
  */
 

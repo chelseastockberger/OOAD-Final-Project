@@ -32,17 +32,7 @@ public class Dialogue {
         g.setFont(font);
         g.setColor(Color.white);
 
-        if(s.state == s.default_state){
-
-        }
-        if(s.state == s.pause_state){
-
-        }
-        if(s.state == s.text_state){
-
-            textInterface();
-
-        }
+        s.state_.showDialogue();
 
     }
 

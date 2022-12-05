@@ -15,7 +15,6 @@ GAME
 Singleton for managing starting new game,
 generating enemies and objects,
 and new level
-
  */
 
 public class Game {

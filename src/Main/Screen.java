@@ -47,11 +47,8 @@ public class Screen extends JPanel implements Runnable{
 
     boolean portaladded = false;
 
-    // Game state
-    public int state;
-    public final int default_state = 1;
-    public final int pause_state = 2;
-    public final int text_state = 3;
+    // Game state -  STATE pattern
+    public State state_;
 
     JFrame window;
 
@@ -67,7 +64,7 @@ public class Screen extends JPanel implements Runnable{
         player = new Player(this, input);
         audio = new Audio();
         ui = new Dialogue(this);
-        state = default_state;
+        state_ = new defaultState(this);
         playMusic();
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -111,55 +108,7 @@ public class Screen extends JPanel implements Runnable{
     // Update data
     public void update(){
 
-        if(state == text_state) {
-
-            // If enter pressed, scroll through dialogue. Once no more dialogue, UI closed
-            if(input.endDialogue){
-                ui.textIndex = ui.textIndex+1;
-                if(ui.textArr.get(ui.textIndex) != null){
-                    ui.currtext = ui.textArr.get(ui.textIndex);
-                }else{
-                    state = default_state;
-                }
-                input.endDialogue = false;
-            }
-
-
-        }else {
-
-            player.update();
-
-            // Check if the player is alive
-            if (player.health <= 0)
-            {
-                game.window.dispose();
-                thread = null;
-                EndMenu endMenu = new EndMenu();
-                endMenu.draw();
-                return;
-            }
-
-            for (Enemy e : enemies) {
-                if (!e.isDead()) {
-                    e.update();
-                }
-            }
-
-            // If all enemies are defeated, add the portal
-            if (checkEnemiesDefeated()) {
-                if (!portaladded)
-                    addPortal();
-            }
-            // If the portal is added, constantly check if the player walks over it
-            if (portaladded) {
-                if (player.x <= map.portal.x && player.x + tileSize >= map.portal.x && player.y <= map.portal.y && player.y + tileSize >= map.portal.y) {
-
-                    portaladded = false;
-                    game.newLevel();
-
-                }
-            }
-        }
+        state_.doUpdate();
 
     }
 

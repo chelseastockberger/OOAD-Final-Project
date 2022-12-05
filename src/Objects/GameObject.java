@@ -53,17 +53,17 @@ public class GameObject {
 
     // Gives the item produced from the object to player
     public void giveItemToPlayer(Player player){
-       if(weapon != null){
+        if(weapon != null){
             player.setWeapon(weapon);
             text[2] = weapon.name;
             text[3] = weapon.caption;
-       }else if(item != null){
+        }else if(item != null){
             player.addItem(item);
             item.player = player;
             item.giveEffect();
             text[2] = item.name;
             text[3] = item.caption;
-       }
+        }
     }
 
     // Sets dialogue text

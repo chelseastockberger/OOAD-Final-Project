@@ -42,6 +42,7 @@ public class Mushroom extends GameObject {
 
         this.item =  i;
 
+
     }
 
 }

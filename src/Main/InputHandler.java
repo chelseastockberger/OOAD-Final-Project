@@ -16,33 +16,7 @@ public class InputHandler implements KeyListener {
     public void keyPressed(KeyEvent e){
         int c = e.getKeyCode();
 
-        if(s.state == s.default_state) {
-            if (c == KeyEvent.VK_W) {
-                upPress = true;
-            }
-            if (c == KeyEvent.VK_A) {
-                leftPress = true;
-            }
-            if (c == KeyEvent.VK_S) {
-                downPress = true;
-            }
-            if (c == KeyEvent.VK_D) {
-                rightPress = true;
-            }
-            if (c == KeyEvent.VK_ENTER) {
-                enterPress = true;
-            }
-            if (c == KeyEvent.VK_SHIFT) {
-                shiftPress = true;
-            }
-        }
-        // Dialogue open
-
-        if(s.state == s.text_state){
-            if(c == KeyEvent.VK_ENTER){
-              endDialogue = true;
-            }
-        }
+       s.state_.inputHandle(this, c);
 
 
     }

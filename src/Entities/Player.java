@@ -5,8 +5,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-import Main.Screen;
-import Main.InputHandler;
+import Main.*;
 import Objects.GameObject;
 import Objects.ItemWeaponFactory;
 import Objects.Items;
@@ -29,6 +28,7 @@ public class Player extends Entity{
     ArrayList<Items> items;
     public Weapons weapon;
 
+
     public Player(Screen s, InputHandler k){
 
         health = 100;
@@ -36,6 +36,7 @@ public class Player extends Entity{
         defense = 0;
         this.s = s;
         this.k = k;
+
 
         ItemWeaponFactory w = new ItemWeaponFactory();
         weapon = w.getWeapon(4);
@@ -138,9 +139,12 @@ public class Player extends Entity{
     }
 
     // Draw sprite based on directions going/action
+
     public void draw(Graphics2D g){
 
         BufferedImage img = null;
+
+        drawHat(g);
 
         // Draw player moving
         switch(dir){
@@ -176,6 +180,16 @@ public class Player extends Entity{
 
         g.drawImage(img,x,y,s.tileSize,s.tileSize,null);
 
+        drawAttackorBlock(g);
+
+
+
+
+    }
+
+    // Draw weapon/shield on
+    void drawAttackorBlock(Graphics2D g){
+
         // Draw weapon on player, if attacking, or shield if blocking
         if(attacking == true || blocking == true){
             switch(dir){
@@ -209,8 +223,11 @@ public class Player extends Entity{
                     break;
             }
         }
+    }
 
-        // Draw on hat, is has hat
+    // Draw hat on
+    void drawHat(Graphics2D g){
+        // Draw on hat, if has hat
         boolean ownsHat = false;
         BufferedImage hat = null;
         if(!items.isEmpty()){
@@ -222,7 +239,7 @@ public class Player extends Entity{
             }
         }
         if(ownsHat){
-            g.drawImage(hat, x,y,s.tileSize/2,s.tileSize/2,null);
+            g.drawImage(hat, x+25,y-30,s.tileSize/2,s.tileSize/2,null);
         }
 
     }
@@ -320,6 +337,7 @@ public class Player extends Entity{
 
             attackCount = 0;
             attacking = false;
+
         }
     }
     // Do 25 ms of blocking, then set to false
@@ -334,7 +352,7 @@ public class Player extends Entity{
     void interactObject(){
         GameObject o = s.collision.checkObjects(this);
         o.giveItemToPlayer(this);
-        s.state = s.text_state;
+        s.state_ = new textState(this.s);
         o.write();
         o.setDestroyed();
 
