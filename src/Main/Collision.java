@@ -26,7 +26,7 @@ public class Collision {
     // Given an entity, sees if the tile they are going on is collidable
     public void checkTile(Entity entity){
 
-        if (s.map.getTileAtPos(entity.x, entity.y).type.collision) {
+        if (s.map.getTileAtPos(entity.x+(s.tileSize/2), entity.y+(60)).type.collision) {
             entity.collision = true;
         }
 

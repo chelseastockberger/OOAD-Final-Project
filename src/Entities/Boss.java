@@ -87,7 +87,7 @@ public class Boss extends Entity {
             attackCount++;
             doAttack(s.player);
 
-            if (projs.size() >= 5) {
+            if (projs.size() >= 10) {
                 projs.clear();
             }
         }

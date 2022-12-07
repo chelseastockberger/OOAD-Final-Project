@@ -41,7 +41,7 @@ public class Map {
 
                 Tile t = tilemap.get(i).get(j);
 
-                g.drawImage(t.type.image, t.x, t.y,s.tileSize,s.tileSize,null);
+                g.drawImage(t.image, t.x, t.y,s.tileSize,s.tileSize,null);
 
             }
         }
@@ -132,10 +132,15 @@ public class Map {
             for (int j = 0; j < s.screenRows; j++) {
 
                 Tile t = tF.getTile(charmap[i][j]);
+
                 t.x = x;
                 t.y = y;
 
                 y+=s.tileSize;
+
+                if(t.type.type_ == 'G'){
+                    addDecor(t);
+                }
 
                 tilemap.get(i).add(t);
 
@@ -143,6 +148,35 @@ public class Map {
         }
 
         //System.out.println("--------");
+
+    }
+
+    void addDecor(Tile t){
+
+        File file;
+        // 10% chance its a tile with some cute decor
+        var rand = Math.random();
+
+        try {
+            if (rand < 0.1) {
+
+                var rand2 = Math.random();
+
+                if (rand2 < 0.5) {
+
+                    file = new File("resources/tiles/decor1.png");
+
+                } else {
+
+                    file = new File("resources/tiles/decor2.png");
+
+                }
+
+                t.image = ImageIO.read(file);
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
 
     }
 

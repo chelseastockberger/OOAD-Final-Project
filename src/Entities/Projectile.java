@@ -70,7 +70,7 @@ public class Projectile extends Entity{
 
         if(isExist) {
 
-            speed = 5;
+            speed = 10;
 
             // Disapears after time
             currTime--;

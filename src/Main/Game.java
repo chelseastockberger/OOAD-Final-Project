@@ -32,7 +32,7 @@ public class Game {
     public Audio audio;
     public int level = 0;
     // CHANGE THIS to change final level (like 10 or something)
-    int finallevel = 5;
+    int finallevel = 1;
     public boolean lastLevel = false;
 
 

@@ -51,7 +51,7 @@ public class EndMenu{
         frame.pack();
 
         // Add quit button
-        quitbutton.setBounds(53*5, 105*5, 450, 215);
+        quitbutton.setBounds(53*5, 105*5, 450, 29*5);
         quitbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,7 +64,7 @@ public class EndMenu{
         quitbutton.setContentAreaFilled(false);
 
         // Add restart button
-        restartbutton.setBounds(53*5, 65*5, 450, 215);
+        restartbutton.setBounds(53*5, 65*5, 450, 29*5);
         restartbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,6 +81,8 @@ public class EndMenu{
 
         frame.add(restartbutton);
         frame.getContentPane().add(restartbutton);
+        frame.add(quitbutton);
+        frame.getContentPane().add(quitbutton);
         frame.setLayout(null);
 
         frame.setLocationRelativeTo(null);

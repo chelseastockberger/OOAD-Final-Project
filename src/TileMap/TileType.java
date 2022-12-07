@@ -8,11 +8,13 @@ import java.io.IOException;
 public class TileType {
 
     public BufferedImage image;
+    public BufferedImage image1 = null;
+    public BufferedImage image2 = null;
     public boolean collision;
-    char type;
+    char type_;
 
     public TileType(char type){
-        this.type = type;
+        this.type_ = type;
         this.collision = true;
         setData();
     }
@@ -23,7 +25,7 @@ public class TileType {
 
         try {
 
-            switch (type) {
+            switch (type_) {
 
                 case '-':
                     file = new File("resources/tiles/white.png");
@@ -77,6 +79,7 @@ public class TileType {
                 case 'P':
                     collision = false;
                     file = new File("resources/tiles/portal.png");
+                    break;
                 default:
                     file = new File("resources/tiles/white.png");
                     break;
