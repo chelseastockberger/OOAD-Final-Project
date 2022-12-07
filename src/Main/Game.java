@@ -35,15 +35,16 @@ public class Game {
     public boolean lastLevel = false;
 
     // Make new screen
-    public void newGame(){
+    public void newGame(boolean dostartmenu){
 
-        StartMenu startMenu = new StartMenu();
-        startMenu.draw();
+        if(dostartmenu) {
+            StartMenu startMenu = new StartMenu();
+            startMenu.draw();
 
-        //Hacky way to wait until the start window is closed
-        while (startMenu.frame.isDisplayable())
-        {
+            //Hacky way to wait until the start window is closed
+            while (startMenu.frame.isDisplayable()) {
 
+            }
         }
 
         window = new JFrame();
@@ -53,7 +54,7 @@ public class Game {
 
         screen = new Screen(this);
         screen.enemies = generateEnemies(1);
-        screen.objects = generateObjects(1);
+        screen.objects = generateObjects(1);;
 
         window.add(screen);
         window.pack();
@@ -64,21 +65,7 @@ public class Game {
 
     public void restartGame(){
 
-
-
-        window = new JFrame();
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-        window.setTitle("Adventure");
-
-        screen = new Screen(this);
-        screen.enemies = generateEnemies(1);
-        screen.objects = generateObjects(1);
-
-        window.add(screen);
-        window.pack();
-        window.setVisible(true);
-        screen.startThread();
+       newGame(false);
 
     }
 
@@ -128,6 +115,7 @@ public class Game {
             screen.enemies = generateEnemies(level);
             screen.player.setPos();
             screen.objects = generateObjects(level);
+
         }else{
             lastLevel = true;
             finalLevel();
@@ -155,13 +143,28 @@ public class Game {
     public ArrayList<GameObject> generateObjects(int level){
 
         ArrayList<GameObject> objs = new ArrayList<>();
-
         ObjectFactory obj = new ObjectFactory();
-        GameObject o1 = obj.getObject(screen,"chest");
-        GameObject o2 = obj.getObject(screen,"shroom");
+        GameObject o = null;
+        GameObject o2 = null;
 
-        objs.add(o1);
-        objs.add(o2);
+        var rand = Math.random();
+        var rand2 = Math.random();
+        // 50% chance between just chest, or shroom with chance of chest as well
+        if(rand < 0.5){
+            o = obj.getObject(screen, "chest");
+        }else{
+            if(rand2 < 0.5) {
+                o = obj.getObject(screen, "shroom");
+            }else{
+                o = obj.getObject(screen, "shroom");
+                o2 = obj.getObject(screen, "chest");
+            }
+        }
+
+        if(o != null)
+            objs.add(o);
+        if(o2 != null)
+            objs.add(o2);
 
         return objs;
 

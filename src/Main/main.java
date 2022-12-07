@@ -16,7 +16,7 @@ public class main {
 
         Game game = Game.getGame();
 
-        game.newGame();
+        game.newGame(true);
 
     }
 

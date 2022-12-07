@@ -44,7 +44,7 @@ public class Screen extends JPanel implements Runnable{
 
     public Map map;
     ArrayList<Enemy> enemies;
-    ArrayList<GameObject> objects;
+    public ArrayList<GameObject> objects;
     public Boss boss = new Boss(this);
     public Player player;
 

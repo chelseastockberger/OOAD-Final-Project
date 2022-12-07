@@ -61,6 +61,25 @@ class Grass extends Tile {
             image = ImageIO.read(file);
             type = 1;
 
+            // 10% chance its a tile with some cute decor
+            var rand = Math.random();
+            if(rand < 0.1){
+
+                var rand2 = Math.random();
+
+                if(rand2 < 0.5){
+
+                    file = new File("resources/tiles/decor1.png");
+
+                }else{
+
+                    file = new File("resources/tiles/decor2.png");
+
+                }
+
+                image = ImageIO.read(file);
+            }
+
         }catch(IOException e){
             e.printStackTrace();
         }
