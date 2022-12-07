@@ -3,11 +3,11 @@ import javax.swing.JFrame;
 
 /*
 - Patterns -
-Factory: Make Items/Weapons, Make Tiles, Make Enemies
+Factory: Make Items/Weapons, Make Enemies
 Singleton: Game
 State: State, textState, etc...
 Game Loop: Screen (OKAYED by BRUCE!)
-
+Flyweight: TileFactory
  */
 
 public class main {

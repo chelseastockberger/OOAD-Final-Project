@@ -22,7 +22,6 @@ public class Map {
     Screen s;
 
     // Holds each tile type
-    int intmap[][];
     char charmap[][];
     public ArrayList<ArrayList<Tile>> tilemap;
     public Tile portal;
@@ -42,7 +41,7 @@ public class Map {
 
                 Tile t = tilemap.get(i).get(j);
 
-                g.drawImage(t.image, t.x, t.y,s.tileSize,s.tileSize,null);
+                g.drawImage(t.type.image, t.x, t.y,s.tileSize,s.tileSize,null);
 
             }
         }
@@ -54,12 +53,10 @@ public class Map {
     public void newMap(){
 
         tilemap = new ArrayList<ArrayList<Tile>>();
-        intmap = new int[s.screenCols][s.screenRows];
         charmap = new char[s.screenCols][s.screenRows];
 
         loadMap();
         makeTileMap();
-
 
     }
 
@@ -73,7 +70,7 @@ public class Map {
 
     }
 
-    // Load map from text file, place it into intmap
+    // Load map from text file, place it into a charmap
     public void loadMap(){
         File file;
         try{
@@ -109,7 +106,6 @@ public class Map {
         }catch(IOException e){
             e.printStackTrace();
         }
-
 
     }
 
@@ -160,11 +156,10 @@ public class Map {
         for (int i = 0; i < s.screenCols; i++) {
             for (int j = 0; j < s.screenRows; j++) {
 
-                if (tilemap.get(i).get(j).type == 1) {
+                if (tilemap.get(i).get(j).type.collision == false) {
 
                     validSpots.add(tilemap.get(i).get(j));
                     cnt++;
-
 
                 }
 
@@ -209,8 +204,9 @@ public class Map {
 
     public void addPortal(){
 
+        TileFactory tF = new TileFactory();
         Tile t = getRandomPosition();
-        Tile p = new Portal();
+        Tile p = tF.getTile('P');
         p.x = t.x;
         p.y = t.y;
         for (int i = 0; i < s.screenCols; i++) {

@@ -1,25 +1,28 @@
 package TileMap;
 
+import java.util.HashMap;
+
+/**
+ * FLYWEIGHT PATTERN
+ *
+ * Tile creation, setting tile data using flyweight pattern
+ *
+ */
+
 public class TileFactory {
+
+    private static final HashMap tileHashMap = new HashMap();
 
     public Tile getTile(char type){
 
-        switch(type){
-            case '-':
-                return new Blank();
-            case 'G':
-                return new Grass();
-            case 'T':
-                return new Top();
-            case 'B':
-                return new Bottom();
-            case 'L':
-                return new Left();
-            case 'R':
-                return new Right();
-            default:
-                return new Corner(type);
+        TileType tile = (TileType)tileHashMap.get(type);
+
+        if(tile == null){
+            tile = new TileType(type);
+            tileHashMap.put(type, tile);
         }
+
+         return new Tile(tile);
 
     }
 
