@@ -27,7 +27,7 @@ public class Audio {
 
        setAudio();
 
-       setVolume((float) 0.1);
+       setVolume((float) 0.3);
     }
 
     // Sets the audio

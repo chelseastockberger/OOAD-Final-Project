@@ -29,13 +29,17 @@ public class Game {
 
     Screen screen;
     JFrame window;
+    public Audio audio;
     public int level = 0;
     // CHANGE THIS to change final level (like 10 or something)
     int finallevel = 5;
     public boolean lastLevel = false;
 
+
     // Make new screen
     public void newGame(boolean dostartmenu){
+
+        audio = new Audio(false);
 
         if(dostartmenu) {
             StartMenu startMenu = new StartMenu();
@@ -47,12 +51,14 @@ public class Game {
             }
         }
 
+        // Setup window, screen, generate enemies and objects
         window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Adventure");
 
         screen = new Screen(this);
+        playMusic();
         screen.enemies = generateEnemies(1);
         screen.objects = generateObjects(1);;
 
@@ -115,27 +121,10 @@ public class Game {
             screen.enemies = generateEnemies(level);
             screen.player.setPos();
             screen.objects = generateObjects(level);
-
         }else{
             lastLevel = true;
             finalLevel();
         }
-
-    }
-
-    public void finalLevel(){
-
-        screen.boss.x = screen.screenWidth/2-(screen.tileSize*4/2);
-        screen.boss.y = 100;
-        screen.audio.stop();
-        screen.audio = new Audio(true);
-        screen.playMusic();
-        screen.loadMap();
-        screen.enemies = null;
-        screen.objects = null;
-        screen.state_ = new bossState(this.screen);
-        screen.player.x = screen.screenWidth/2;
-        screen.player.y = screen.screenHeight-(screen.tileSize*2);
 
     }
 
@@ -168,6 +157,28 @@ public class Game {
 
         return objs;
 
+    }
+
+    // Loads final level, setting variables
+    public void finalLevel(){
+
+        screen.boss.x = screen.screenWidth/2-(screen.tileSize*4/2);
+        screen.boss.y = 100;
+        audio.stop();
+        audio = new Audio(true);
+        playMusic();
+        screen.loadMap();
+        screen.enemies = null;
+        screen.objects = null;
+        screen.state_ = new bossState(this.screen);
+        screen.player.x = screen.screenWidth/2;
+        screen.player.y = screen.screenHeight-(screen.tileSize*2);
+
+    }
+
+    public void playMusic(){
+        audio.play();
+        audio.loop();
     }
 
 

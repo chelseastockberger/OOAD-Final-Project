@@ -34,7 +34,7 @@ public class Boss extends Entity {
         this.s = s;
         attackSpeed = 4;
         projs = new ArrayList<>();
-        this.currproj = new Projectile(s);
+        this.currproj = new Projectile(s, true);
         maxHealth = 300;
         health = maxHealth;
 
@@ -55,7 +55,6 @@ public class Boss extends Entity {
 
     public void draw(Graphics2D g){
 
-        //g.drawImage(currimage,x,y,s.tileSize*4,s.tileSize*4,null);
         g.drawImage(currimage,x,y,s.tileSize*4,s.tileSize*4,null);
 
         // Draw health bar
@@ -102,7 +101,7 @@ public class Boss extends Entity {
         // Do attack
         if(attackCount >= 90){
             attackCount = 0;
-            currproj = new Projectile(s);
+            currproj = new Projectile(s, true);
             projs.add(currproj);
             currproj.start(this.x+(s.tileSize*2),this.y+(s.tileSize*2), false);
         }

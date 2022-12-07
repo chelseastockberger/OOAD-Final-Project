@@ -77,6 +77,23 @@ public class Collision {
 
     }
 
+    public Enemy getEnemyAtPos(int x, int y){
+
+        int dist = s.tileSize;
+
+        for(Enemy e: s.enemies){
+            double currDist = sqrt(pow((x - e.x),2) + pow((y - e.y),2));
+
+            if(currDist <= dist){
+                return e;
+            }
+
+        }
+
+        return null;
+
+    }
+
 
 
 }

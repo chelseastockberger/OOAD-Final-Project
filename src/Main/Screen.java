@@ -38,7 +38,6 @@ public class Screen extends JPanel implements Runnable{
     InputHandler input;
     public Collision collision;
     Thread thread;
-    public Audio audio;
     public Dialogue ui;
     ScreenUI scUI = new ScreenUI(this);
 
@@ -53,7 +52,6 @@ public class Screen extends JPanel implements Runnable{
     // Game state -  STATE pattern
     public State state_;
 
-    JFrame window;
 
     public Screen(Game g){
 
@@ -65,10 +63,8 @@ public class Screen extends JPanel implements Runnable{
         boss.y = 0 + (tileSize*2);
         collision = new Collision(this);
         player = new Player(this, input);
-        audio = new Audio(false);
         ui = new Dialogue(this);
         state_ = new defaultState(this);
-        playMusic();
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.white);
@@ -105,7 +101,7 @@ public class Screen extends JPanel implements Runnable{
                 delta--;
             }
         }
-        audio.stop();
+        game.audio.stop();
     }
 
     // Update data
@@ -122,7 +118,7 @@ public class Screen extends JPanel implements Runnable{
         Graphics2D g2D = (Graphics2D)g;
         map.draw(g2D);
 
-        // If not the last level, draw objeccts and enemies, otherwise draw boss stuff
+        // If not the last level, draw objects and enemies, otherwise draw boss stuff
         if(!game.lastLevel) {
             for(GameObject o: objects){
                 o.draw(g2D);
@@ -141,6 +137,9 @@ public class Screen extends JPanel implements Runnable{
         }
 
         player.draw(g2D);
+        if(player.currproj != null){
+            player.currproj.draw(g2D);
+        }
         scUI.draw(g2D);
         ui.draw(g2D);
 
@@ -178,13 +177,6 @@ public class Screen extends JPanel implements Runnable{
         portaladded = true;
 
     }
-
-    public void playMusic(){
-        audio.play();
-        audio.loop();
-    }
-
-
 
 
 }

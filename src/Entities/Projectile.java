@@ -16,11 +16,14 @@ PROJECTILE
 
 Used by the boss, shoots towards the player
 If blocked by player, rebounds towards boss
+Used by player if they have magic wand. Shoots
+in a straight line.
 
  */
 public class Projectile extends Entity{
 
     public BufferedImage image;
+    boolean isBoss;
     int maxTime = 300;
     int currTime = 0;
     boolean isExist = false;
@@ -28,13 +31,18 @@ public class Projectile extends Entity{
     int startx;
     int starty;
 
-    public Projectile(Screen s){
+    public Projectile(Screen s, boolean isBoss){
 
         this.s = s;
+        this.isBoss = isBoss;
 
         try {
-
-            File file = new File("resources/enemies/projectile.png");
+            File file;
+            if(isBoss) {
+                file = new File("resources/enemies/projectile.png");
+            }else{
+                file = new File("resources/enemies/projectile2.png");
+            }
             image = ImageIO.read(file);
 
         }catch(IOException e){
@@ -70,21 +78,43 @@ public class Projectile extends Entity{
                 isExist = false;
             }
 
-            // Move towards boss or player
-            if(rebounded){
-                moveToBoss(s.boss);
-                if(checkHitEntity(s.boss)){
-                    s.boss.health = s.boss.health-50;
-                    s.boss.isHurt = true;
-                    isExist = false;
-                }
+            if(isBoss) {
+                doBossUpdate();
             }else{
-                moveToPlayer(s.player);
-                if (checkHitEntity(s.player)) {
-                    s.player.getAttackProjectile(10, this);
-                }
+                doPlayerUpdate();
             }
 
+        }
+
+    }
+
+    public void doBossUpdate(){
+        // Move towards boss or player
+        if(rebounded){
+            moveToBoss(s.boss);
+            if(checkHitEntity(s.boss)){
+                s.boss.health = s.boss.health-50;
+                s.boss.isHurt = true;
+                isExist = false;
+            }
+        }else{
+            moveToPlayer(s.player);
+            if (checkHitEntity(s.player)) {
+                s.player.getAttackProjectile(10, this);
+            }
+        }
+
+    }
+
+    public void doPlayerUpdate(){
+
+        // Shoot projectile forwards, check to see if collides with enemy
+        shootProjectile(s.player);
+        Enemy e = s.collision.getEnemyAtPos(this.x,this.y);
+        if(e != null){
+            e.getHit();
+            e.updateHealth(-13);
+            isExist = false;
         }
 
     }
@@ -92,7 +122,6 @@ public class Projectile extends Entity{
     // Check if collide with entity
     public boolean checkHitEntity(Entity e){
 
-        // If certain dist away from player (size of 3 tile), move towards
         int dist = s.tileSize;
         double currDist = sqrt(pow((e.x - x),2) + pow((e.y - y),2));
 
@@ -102,7 +131,6 @@ public class Projectile extends Entity{
             return false;
         }
     }
-
 
     // Move towards player
     public void moveToPlayer(Player p){
@@ -117,6 +145,27 @@ public class Projectile extends Entity{
         x += xS;
         y += yS;
 
+
+    }
+
+    // Shoot straight
+    public void shootProjectile(Player p){
+
+        switch (p.dir) {
+            case "up":
+                y -= speed;
+                break;
+            case "down":
+                y += speed;
+                break;
+            case "left":
+                x -= speed;
+                break;
+            case "right":
+                x += speed;
+                break;
+
+        }
 
     }
 

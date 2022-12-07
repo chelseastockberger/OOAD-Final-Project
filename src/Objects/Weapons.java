@@ -97,13 +97,13 @@ class MagicStaff extends Weapons {
         damage = 13;
         try{
             // Attack images
-            File file = new File("resources/weapons/sword.png");
+            File file = new File("resources/weapons/staffdown.png");
             downAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordup.png");
+            file = new File("resources/weapons/staffup.png");
             upAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordleft.png");
+            file = new File("resources/weapons/staffleft.png");
             leftAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordright.png");
+            file = new File("resources/weapons/staffright.png");
             rightAttack = ImageIO.read(file);
         }catch(IOException e){
             e.printStackTrace();

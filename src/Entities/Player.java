@@ -14,14 +14,21 @@ import Objects.Weapons;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+/*
+PLAYER
+Holds all data related to the Player
+Takes user input to move player/do actions
+Handles attacking and blocking
+ */
+
 
 public class Player extends Entity{
 
     InputHandler k;
     BufferedImage levelimg;
     public BufferedImage up1,down1,left1,right1,up2,down2,left2,right2;
-    public BufferedImage upAttack, downAttack, leftAttack, rightAttack;
     public BufferedImage upBlock, block;
+    public Projectile currproj;
     int attackCount = 0;
     int blockCount = 0;
     boolean attacking;
@@ -39,7 +46,7 @@ public class Player extends Entity{
         defense = 0;
         this.s = s;
         this.k = k;
-
+        currproj = null;
 
         ItemWeaponFactory w = new ItemWeaponFactory();
         weapon = w.getWeapon(4);
@@ -56,8 +63,10 @@ public class Player extends Entity{
         getImage();
     }
 
+    // Set weapon, only update if weapon is better than previous one
     public void setWeapon(Weapons w){
-        this.weapon = w;
+        if(weapon.damage < w.damage)
+            this.weapon = w;
     }
 
     // Add item to player. Only add hat or extra strength if they don't already have it.
@@ -87,9 +96,12 @@ public class Player extends Entity{
         }
 
         getMove();
-
         setAttacking();
         setBlocking();
+
+        if(currproj != null){
+            currproj.update();
+        }
 
     }
 
@@ -98,10 +110,8 @@ public class Player extends Entity{
 
         if(k.upPress == true || k.downPress == true || k.leftPress == true || k.rightPress == true) {
 
-
             collision = false;
             s.collision.checkTile(this);
-            //s.collision.checkObjects(this);
 
             // Handle keyboard input
             if (k.upPress == true) {
@@ -156,7 +166,6 @@ public class Player extends Entity{
     }
 
     // Draw sprite based on directions going/action
-
     public void draw(Graphics2D g){
 
         drawHat(g);
@@ -194,9 +203,7 @@ public class Player extends Entity{
         }
 
         g.drawImage(currimage,x,y,s.tileSize,s.tileSize,null);
-
         drawAttackorBlock(g);
-
 
     }
 
@@ -208,28 +215,28 @@ public class Player extends Entity{
             switch(dir){
                 case "down":
                     if(attacking) {
-                        g.drawImage(downAttack, x + (22), y + (36), s.tileSize, s.tileSize, null);
+                        g.drawImage(weapon.downAttack, x + (22), y + (36), s.tileSize, s.tileSize, null);
                     }else{
                         g.drawImage(block, x + (37), y + (36), s.tileSize/2, s.tileSize/2, null);
                     }
                     break;
                 case "up":
                     if(attacking) {
-                        g.drawImage(upAttack, x + (22), y + (36), s.tileSize, s.tileSize, null);
+                        g.drawImage(weapon.upAttack, x + (22), y + (36), s.tileSize, s.tileSize, null);
                     }else{
                         g.drawImage(upBlock, x + (63), y+34, s.tileSize/2, s.tileSize/2, null);
                     }
                     break;
                 case "left":
                     if(attacking) {
-                        g.drawImage(leftAttack, x - (53), y + (9), s.tileSize, s.tileSize, null);
+                        g.drawImage(weapon.leftAttack, x - (53), y + (9), s.tileSize, s.tileSize, null);
                     }else{
                         g.drawImage(block, x - (20), y + (36), s.tileSize/2, s.tileSize/2, null);
                     }
                     break;
                 case "right":
                     if(attacking) {
-                        g.drawImage(rightAttack, x + (49), y + 15, s.tileSize, s.tileSize, null);
+                        g.drawImage(weapon.rightAttack, x + (49), y + 15, s.tileSize, s.tileSize, null);
                     }else{
                         g.drawImage(block, x + (45), y + (36), s.tileSize/2, s.tileSize/2, null);
                     }
@@ -281,16 +288,6 @@ public class Player extends Entity{
             file = new File("resources/player/frog_right2.png");
             right2 = ImageIO.read(file);
 
-            // Attack images
-            file = new File("resources/weapons/sword.png");
-            downAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordup.png");
-            upAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordleft.png");
-            leftAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordright.png");
-            rightAttack = ImageIO.read(file);
-
             // Level img
             file = new File("resources/icons/level.png");
             levelimg = ImageIO.read(file);
@@ -323,7 +320,6 @@ public class Player extends Entity{
         }
     }
 
-
     // Take damage
     public void getAttack(int dmg){
         // if not blocking, take damage
@@ -353,11 +349,19 @@ public class Player extends Entity{
 
             if(!s.game.lastLevel) {
 
-                // Check if hit monster
-                if (s.collision.getCollidingMonster(this) != null) {
-                    Enemy e = s.collision.getCollidingMonster(this);
-                    e.getHit();
-                    e.updateHealth(-damage);
+                // Shoot projectile if magic staff, otherwise normal attack
+                if(weapon.name != "Magic Staff") {
+                    // Check if hit monster
+                    if (s.collision.getCollidingMonster(this) != null) {
+                        Enemy e = s.collision.getCollidingMonster(this);
+                        e.getHit();
+                        e.updateHealth(-damage);
+                    }
+                }else{
+
+                    // Shoot projectile
+                    currproj = new Projectile(s, false);
+                    currproj.start(this.x+(s.tileSize/2),this.y+(s.tileSize/2), false);
                 }
 
                 // Check if hit object
@@ -381,6 +385,7 @@ public class Player extends Entity{
         }
     }
 
+    // Interact with an object
     void interactObject(){
         GameObject o = s.collision.checkObjects(this);
         o.giveItemToPlayer(this);
