@@ -109,8 +109,8 @@ public abstract class Enemy extends Entity{
         }else{
             currimage = image;
         }
-        // Do attack every 50
-        if(attackCount >= 90){
+        // Do attack every 75
+        if(attackCount >= 75){
             currimage = attackimage;
             attackCount = 0;
             p.getAttack(damage);
@@ -365,7 +365,7 @@ class Head extends Enemy{
             File file2 = new File("resources/enemies/head-attack.png");
             image = ImageIO.read(file);
             attackimage = ImageIO.read(file2);
-            file = new File("resources/enemies/ghost-hurt.png");
+            file = new File("resources/enemies/head-hurt.png");
             hurtimage = ImageIO.read(file);
             currimage = image;
 

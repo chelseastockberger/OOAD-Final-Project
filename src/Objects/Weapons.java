@@ -48,13 +48,13 @@ class SharpSword extends Weapons {
         damage = 7;
         try{
             // Attack images
-            File file = new File("resources/weapons/sword.png");
+            File file = new File("resources/weapons/sword-sharp.png");
             downAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordup.png");
+            file = new File("resources/weapons/swordup-sharp.png");
             upAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordleft.png");
+            file = new File("resources/weapons/swordleft-sharp.png");
             leftAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordright.png");
+            file = new File("resources/weapons/swordright-sharp.png");
             rightAttack = ImageIO.read(file);
         }catch(IOException e){
             e.printStackTrace();
@@ -72,13 +72,13 @@ class CrystalSword extends Weapons {
         damage = 10;
         try{
             // Attack images
-            File file = new File("resources/weapons/sword.png");
+            File file = new File("resources/weapons/sword-c.png");
             downAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordup.png");
+            file = new File("resources/weapons/swordup-c.png");
             upAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordleft.png");
+            file = new File("resources/weapons/swordleft-c.png");
             leftAttack = ImageIO.read(file);
-            file = new File("resources/weapons/swordright.png");
+            file = new File("resources/weapons/swordright-c.png");
             rightAttack = ImageIO.read(file);
         }catch(IOException e){
             e.printStackTrace();

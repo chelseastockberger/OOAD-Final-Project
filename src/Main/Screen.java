@@ -55,8 +55,6 @@ public class Screen extends JPanel implements Runnable{
 
     JFrame window;
 
-
-
     public Screen(Game g){
 
         this.game = g;

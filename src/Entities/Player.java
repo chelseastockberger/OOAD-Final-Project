@@ -59,8 +59,22 @@ public class Player extends Entity{
     public void setWeapon(Weapons w){
         this.weapon = w;
     }
+
+    // Add item to player. Only add hat or extra strength if they don't already have it.
     public void addItem(Items i){
-        items.add(i);
+        boolean canAdd = true;
+        if(!items.isEmpty()){
+            for(Items it: items){
+                if(it.name == i.name ){
+                    if(i.name == "Cool Hat" || i.name == "Ultra Strength"){
+                        canAdd = false;
+                    }
+                }
+            }
+        }
+        if(canAdd) {
+            items.add(i);
+        }
     }
 
     public void update(){

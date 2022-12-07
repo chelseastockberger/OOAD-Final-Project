@@ -1,12 +1,9 @@
 package Main;
-import Entities.Boss;
 import Entities.Enemy;
 import Entities.EnemyFactory;
-import Entities.Player;
 import Objects.GameObject;
 import Objects.ObjectFactory;
-import TileMap.Map;
-import TileMap.Tile;
+
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -34,7 +31,7 @@ public class Game {
     JFrame window;
     public int level = 0;
     // CHANGE THIS to change final level (like 10 or something)
-    int finallevel = 1;
+    int finallevel = 5;
     public boolean lastLevel = false;
 
     // Make new screen
@@ -92,21 +89,29 @@ public class Game {
 
         EnemyFactory ef = new EnemyFactory();
 
-        if(level <= 2){
-            for(int i=1; i<3; i++) {
+        if(level <= 1){
+            for(int i=1; i<=2; i++) {
                 Enemy e = ef.getEnemy(screen, i);
                 enemies.add(e);
             }
-        }else if(level <= 4){
-            for(int i=2; i<4; i++) {
-                Enemy e = ef.getEnemy(screen, i);
+        }else if(level <= 3){
+            Enemy e;
+            for(int i=2; i<=4; i++) {
+                e = ef.getEnemy(screen, i);
                 enemies.add(e);
             }
-        }else if(level <= 6){
-            for(int i=3; i<7; i++) {
-                Enemy e = ef.getEnemy(screen, i);
+            e = ef.getEnemy(screen, 3);
+            enemies.add(e);
+        }else if(level <= 5){
+            Enemy e;
+            for(int i=3; i<=5; i++) {
+                e = ef.getEnemy(screen, i);
                 enemies.add(e);
             }
+            e = ef.getEnemy(screen, 4);
+            enemies.add(e);
+            e = ef.getEnemy(screen, 5);
+            enemies.add(e);
         }
 
         return enemies;
