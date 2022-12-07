@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 Factory: Make Items/Weapons, Make Tiles, Make Enemies
 Singleton: Game
 State: State, textState, etc...
+Game Loop: Screen (OKAYED by BRUCE!)
 
  */
 

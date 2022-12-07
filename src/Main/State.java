@@ -1,6 +1,11 @@
 package Main;
 
-import Entities.Enemy;
+/*
+STATE
+
+Abstract class to be able to do different actions based on
+current state of the game
+ */
 
 public abstract class State {
 

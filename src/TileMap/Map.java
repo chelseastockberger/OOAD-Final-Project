@@ -65,7 +65,7 @@ public class Map {
 
     File getRandomMap(){
 
-        int num = (int) ( Math.random() * 2 + 1); // will return either 1 or 2
+        int num = (int) ( Math.random() * 3 + 1);
         char c = (char)(num + '0');
         System.out.println(c);
         File file = new File("resources/maps/rand" + c + ".txt");
@@ -75,11 +75,14 @@ public class Map {
 
     // Load map from text file, place it into intmap
     public void loadMap(){
-
+        File file;
         try{
 
-            File file = new File("resources/maps/rand1.txt");
-            //File file = getRandomMap();
+            if(s.game.lastLevel){
+               file = new File("resources/maps/final.txt");
+            }else {
+                file = getRandomMap();
+            }
             Scanner readFile = new Scanner(file);
 
             int col=0;

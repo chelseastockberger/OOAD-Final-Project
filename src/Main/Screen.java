@@ -3,8 +3,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import Entities.Boss;
 import Entities.Enemy;
 import Entities.Player;
+import Entities.Projectile;
 import Objects.GameObject;
 import TileMap.Map;
 
@@ -36,13 +38,14 @@ public class Screen extends JPanel implements Runnable{
     InputHandler input;
     public Collision collision;
     Thread thread;
-    Audio audio;
+    public Audio audio;
     public Dialogue ui;
     ScreenUI scUI = new ScreenUI(this);
 
     public Map map;
     ArrayList<Enemy> enemies;
     ArrayList<GameObject> objects;
+    public Boss boss = new Boss(this);
     public Player player;
 
     boolean portaladded = false;
@@ -60,9 +63,11 @@ public class Screen extends JPanel implements Runnable{
         map = new Map(this);
         input = new InputHandler();
         input.s = this;
+        boss.x = screenWidth - (tileSize*128);
+        boss.y = 0 + (tileSize*2);
         collision = new Collision(this);
         player = new Player(this, input);
-        audio = new Audio();
+        audio = new Audio(false);
         ui = new Dialogue(this);
         state_ = new defaultState(this);
         playMusic();
@@ -112,30 +117,34 @@ public class Screen extends JPanel implements Runnable{
 
     }
 
-    // Add data to screen
+    // Paint data/objects/enemies etc to screen
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
-
         Graphics2D g2D = (Graphics2D)g;
-
         map.draw(g2D);
 
-        for(GameObject o: objects){
-            o.draw(g2D);
-        }
+        // If not the last level, draw objeccts and enemies, otherwise draw boss stuff
+        if(!game.lastLevel) {
+            for(GameObject o: objects){
+                o.draw(g2D);
+            }
 
-        for(Enemy e: enemies){
-            if(!e.isDead()){
-                e.draw(g2D);
+            for (Enemy e : enemies) {
+                if (!e.isDead()) {
+                    e.draw(g2D);
+                }
+            }
+        }else{
+            boss.draw(g2D);
+            for(Projectile pj: boss.projs){
+                pj.draw(g2D);
             }
         }
 
         player.draw(g2D);
-
         scUI.draw(g2D);
         ui.draw(g2D);
-
 
         g2D.dispose();
     }

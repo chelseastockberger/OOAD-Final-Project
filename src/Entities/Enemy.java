@@ -16,37 +16,49 @@ import static java.lang.Math.sqrt;
 
 public abstract class Enemy extends Entity{
 
-    public BufferedImage image;
-    public BufferedImage attackimage;
-    public BufferedImage currimage;
+    public BufferedImage image, attackimage, hurtimage;
+    public boolean isHit = false;
     int damage;
     int attackSpeed;
     int attackCount = 0;
+    int hurtCount = 0;
 
     public void update(){
 
         collision = false;
         s.collision.checkTile(this);
-        //s.collision.checkObjects(this);
         String dirs[] = {"up","down","left","right"};
 
         animCount++;
 
-        // Move if not attacking
-        if(!checkDoAttack(s.player)) {
-
-            //currimage = image;
-            if (animCount > 100) {
-                Random rand = new Random();
-                int r = rand.nextInt(4);
-                dir = dirs[r];
-                animCount = 0;
+        // If got hit, display hit image and pause
+        if(isHit){
+            hurtCount++;
+            if(hurtCount>=20){
+                hurtCount = 0;
+                isHit=false;
+                currimage = image;
             }
-            randMove();
 
-        }else{
-            attackCount++;
-            doAttack(s.player);
+        }else {
+
+            // Move if not attacking
+            if (!checkDoAttack(s.player)) {
+
+                if (animCount > 100) {
+                    Random rand = new Random();
+                    int r = rand.nextInt(4);
+                    dir = dirs[r];
+                    animCount = 0;
+                }
+                randMove();
+
+            } else {
+
+                // Add to attack count, attack if attacking
+                attackCount++;
+                doAttack(s.player);
+            }
         }
 
     }
@@ -98,7 +110,7 @@ public abstract class Enemy extends Entity{
             currimage = image;
         }
         // Do attack every 50
-        if(attackCount >= 50){
+        if(attackCount >= 90){
             currimage = attackimage;
             attackCount = 0;
             p.getAttack(damage);
@@ -138,7 +150,6 @@ public abstract class Enemy extends Entity{
     // Move towards player
     void moveToPlayer(Player p){
 
-
             float xS = (p.x - x);
             float yS = (p.y - y);
             double factor = speed / Math.sqrt(xS * xS + yS * yS);
@@ -147,6 +158,43 @@ public abstract class Enemy extends Entity{
 
             x += xS;
             y += yS;
+
+    }
+
+    // Set if hit
+    public void getHit(){
+         isHit = true;
+         currimage = hurtimage;
+         doKnockback();
+    }
+
+    void doKnockback(){
+
+        switch(s.player.dir){
+            case "up":
+                y = y-(s.tileSize/3);
+                break;
+            case "down":
+                y = y+(s.tileSize/3);
+                break;
+            case "left":
+                x = x-(s.tileSize/3);
+                break;
+            case "right":
+                x = x+(s.tileSize/3);
+                break;
+
+        }
+
+        // Check if the knockback will result in going out of bounds
+        s.collision.checkTile(this);
+        if(collision){
+            x = oX;
+            y = oY;
+        }
+
+        oX = x;
+        oY = y;
 
 
     }
@@ -176,7 +224,10 @@ class Ghost extends Enemy {
             File file2 = new File("resources/enemies/ghost-attack.png");
             image = ImageIO.read(file);
             attackimage = ImageIO.read(file2);
+            file = new File("resources/enemies/ghost-hurt.png");
+            hurtimage = ImageIO.read(file);
             currimage = image;
+
 
         }catch(IOException e){
             e.printStackTrace();
@@ -208,6 +259,8 @@ class Blob extends Enemy{
             File file2 = new File("resources/enemies/blob-attack.png");
             image = ImageIO.read(file);
             attackimage = ImageIO.read(file2);
+            file = new File("resources/enemies/blob-hurt.png");
+            hurtimage = ImageIO.read(file);
             currimage = image;
 
         }catch(IOException e){
@@ -237,9 +290,11 @@ class Isopod extends Enemy{
         try {
 
             File file = new File("resources/enemies/pillbug.png");
-            File file2 = new File("resources/enemies/ghost-attack.png");
+            File file2 = new File("resources/enemies/pullbug-attack.png");
             image = ImageIO.read(file);
             attackimage = ImageIO.read(file2);
+            file = new File("resources/enemies/pillbug-hurt.png");
+            hurtimage = ImageIO.read(file);
             currimage = image;
 
         }catch(IOException e){
@@ -271,9 +326,11 @@ class Skull extends Enemy{
         try {
 
             File file = new File("resources/enemies/skullkid.png");
-            File file2 = new File("resources/enemies/ghost-attack.png");
+            File file2 = new File("resources/enemies/skullkid-attack.png");
             image = ImageIO.read(file);
             attackimage = ImageIO.read(file2);
+            file = new File("resources/enemies/skullkid-hurt.png");
+            hurtimage = ImageIO.read(file);
             currimage = image;
 
         }catch(IOException e){
@@ -305,9 +362,11 @@ class Head extends Enemy{
         try {
 
             File file = new File("resources/enemies/head.png");
-            File file2 = new File("resources/enemies/ghost-attack.png");
+            File file2 = new File("resources/enemies/head-attack.png");
             image = ImageIO.read(file);
             attackimage = ImageIO.read(file2);
+            file = new File("resources/enemies/ghost-hurt.png");
+            hurtimage = ImageIO.read(file);
             currimage = image;
 
         }catch(IOException e){

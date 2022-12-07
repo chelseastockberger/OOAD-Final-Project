@@ -16,6 +16,8 @@ public class EnemyFactory {
                 return new Isopod(s);
             case 4:
                 return new Head(s);
+            case 5:
+                return new Skull(s);
         }
 
         return null;

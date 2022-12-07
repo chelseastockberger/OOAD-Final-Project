@@ -19,6 +19,9 @@ public class Player extends Entity{
 
     InputHandler k;
     BufferedImage levelimg;
+    public BufferedImage up1,down1,left1,right1,up2,down2,left2,right2;
+    public BufferedImage upAttack, downAttack, leftAttack, rightAttack;
+    public BufferedImage upBlock, block;
     int attackCount = 0;
     int blockCount = 0;
     boolean attacking;
@@ -142,47 +145,43 @@ public class Player extends Entity{
 
     public void draw(Graphics2D g){
 
-        BufferedImage img = null;
-
         drawHat(g);
 
         // Draw player moving
         switch(dir){
             case "up":
                 if(animStep == 1){
-                    img = up1;
+                    currimage = up1;
                 }else{
-                    img = up2;
+                    currimage= up2;
                 }
                 break;
             case "down":
                 if(animStep == 1){
-                    img = down1;
+                    currimage = down1;
                 }else{
-                    img = down2;
+                    currimage = down2;
                 }
                 break;
             case "left":
                 if(animStep == 1){
-                    img = left1;
+                    currimage = left1;
                 }else{
-                    img = left2;
+                    currimage = left2;
                 }
                 break;
             case "right":
                 if(animStep == 1){
-                    img = right1;
+                    currimage = right1;
                 }else{
-                    img = right2;
+                    currimage = right2;
                 }
                 break;
         }
 
-        g.drawImage(img,x,y,s.tileSize,s.tileSize,null);
+        g.drawImage(currimage,x,y,s.tileSize,s.tileSize,null);
 
         drawAttackorBlock(g);
-
-
 
 
     }
@@ -288,6 +287,8 @@ public class Player extends Entity{
             file = new File("resources/weapons/shield.png");
             block = ImageIO.read(file);
 
+            currimage = up1;
+
 
         }catch(IOException e){
             e.printStackTrace();
@@ -313,8 +314,20 @@ public class Player extends Entity{
     public void getAttack(int dmg){
         // if not blocking, take damage
         if(!blocking) {
-            health -= (dmg - defense);
+            updateHealth(-(dmg-defense));
         }
+    }
+
+    // Take damage or rebound projectile
+    public void getAttackProjectile(int dmg, Projectile proj){
+
+        if(!blocking) {
+            health -= (dmg - defense);
+            proj.isExist = false;
+        }else{
+            proj.start(this.x,this.y, true);
+        }
+
     }
 
     // 25 frames of attack, runs when attacking is true, only does attack once 25 ms passed
@@ -324,15 +337,20 @@ public class Player extends Entity{
 
         if(attackCount > 25){
 
-            // Check if hit monster
-            if (s.collision.getCollidingMonster(this) != null) {
-                Entity e = s.collision.getCollidingMonster(this);
-                e.updateHealth(-damage);
-            }
+            if(!s.game.lastLevel) {
 
-            // Check if hit object
-            if (s.collision.checkObjects(this) != null) {
-                interactObject();
+                // Check if hit monster
+                if (s.collision.getCollidingMonster(this) != null) {
+                    Enemy e = s.collision.getCollidingMonster(this);
+                    e.getHit();
+                    e.updateHealth(-damage);
+                }
+
+                // Check if hit object
+                if (s.collision.checkObjects(this) != null) {
+                    interactObject();
+                }
+
             }
 
             attackCount = 0;

@@ -1,4 +1,5 @@
 package Main;
+import Entities.Boss;
 import Entities.Enemy;
 import Entities.EnemyFactory;
 import Entities.Player;
@@ -32,6 +33,9 @@ public class Game {
     Screen screen;
     JFrame window;
     public int level = 0;
+    // CHANGE THIS to change final level (like 10 or something)
+    int finallevel = 1;
+    public boolean lastLevel = false;
 
     // Make new screen
     public void newGame(){
@@ -94,12 +98,12 @@ public class Game {
                 enemies.add(e);
             }
         }else if(level <= 4){
-            for(int i=1; i<4; i++) {
+            for(int i=2; i<4; i++) {
                 Enemy e = ef.getEnemy(screen, i);
                 enemies.add(e);
             }
         }else if(level <= 6){
-            for(int i=1; i<5; i++) {
+            for(int i=3; i<7; i++) {
                 Enemy e = ef.getEnemy(screen, i);
                 enemies.add(e);
             }
@@ -114,10 +118,31 @@ public class Game {
 
         level++;
 
+        if(level != finallevel) {
+            screen.loadMap();
+            screen.enemies = generateEnemies(level);
+            screen.player.setPos();
+            screen.objects = generateObjects(level);
+        }else{
+            lastLevel = true;
+            finalLevel();
+        }
+
+    }
+
+    public void finalLevel(){
+
+        screen.boss.x = screen.screenWidth/2-(screen.tileSize*4/2);
+        screen.boss.y = 100;
+        screen.audio.stop();
+        screen.audio = new Audio(true);
+        screen.playMusic();
         screen.loadMap();
-        screen.enemies = generateEnemies(level);
-        screen.player.setPos();
-        screen.objects = generateObjects(level);
+        screen.enemies = null;
+        screen.objects = null;
+        screen.state_ = new bossState(this.screen);
+        screen.player.x = screen.screenWidth/2;
+        screen.player.y = screen.screenHeight-(screen.tileSize*2);
 
     }
 

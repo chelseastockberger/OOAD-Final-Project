@@ -17,9 +17,13 @@ public class Audio {
     Clip sound;
     File music;
 
-    public Audio(){
+    public Audio(boolean isBoss){
 
-       music = new File("resources/audio/music.wav");
+        if(isBoss){
+            music = new File("resources/audio/desert.wav");
+        }else{
+            music = new File("resources/audio/music.wav");
+        }
 
        setAudio();
 

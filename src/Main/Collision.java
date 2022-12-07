@@ -33,7 +33,7 @@ public class Collision {
     }
 
     // Given the player, sees if colliding with monster and returns the monster
-    public Entity getCollidingMonster(Entity player){
+    public Enemy getCollidingMonster(Entity player){
 
         int dist = s.tileSize;
 
