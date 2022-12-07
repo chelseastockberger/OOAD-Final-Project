@@ -8,61 +8,64 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-/*
-STARTMENU
-What appears when you load up the game.
- */
-
 
 public class EndMenu{
 
     JFrame frame = new JFrame();
-    JButton button1;
-    JButton button2;
-    JLabel label;
+    JButton quitbutton, restartbutton;
     BufferedImage img;
-    Image btnimg;
+    Image restartimg;
+    Image quitimg;
 
-    public EndMenu(){
-//        try {
-//            File file = new File("resources/icons/start_art.png");
-//            img = ImageIO.read(file);
-//            file = new File("resources/icons/button.png");
-//            BufferedImage btnimgB = ImageIO.read(file);
-//
-//            btnimg = btnimgB.getScaledInstance(btnimgB.getWidth()*5, btnimgB.getHeight()*5, Image.SCALE_DEFAULT);
-        button1 = new JButton("Quit");
-        button2 = new JButton("Restart");
-        label = new JLabel("Game Over");
-//        }catch(IOException e){
-//            e.printStackTrace();
-//        }
+    public EndMenu(boolean didWin){
+        try {
+            File file;
+            if(didWin) {
+                file = new File("resources/icons/won_art.png");
+            }else{
+                file = new File("resources/icons/lose_art.png");
+            }
+            img = ImageIO.read(file);
+            file = new File("resources/icons/restart.png");
+            BufferedImage btnimgB = ImageIO.read(file);
+            restartimg = btnimgB.getScaledInstance(btnimgB.getWidth()*5, btnimgB.getHeight()*5, Image.SCALE_DEFAULT);
+            restartbutton = new JButton(new ImageIcon(restartimg));
+            file = new File("resources/icons/quit.png");
+            btnimgB = ImageIO.read(file);
+            quitimg = btnimgB.getScaledInstance(btnimgB.getWidth()*5, btnimgB.getHeight()*5, Image.SCALE_DEFAULT);
+            quitbutton = new JButton(new ImageIcon(restartimg));
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void draw()
     {
 
         // Making the frame
-        //Image img_ = img.getScaledInstance(img.getWidth()*5, img.getHeight()*5, Image.SCALE_DEFAULT);
-        //JLabel label = new JLabel(new ImageIcon(img_));
+        Image img_ = img.getScaledInstance(img.getWidth()*5, img.getHeight()*5, Image.SCALE_DEFAULT);
+        JLabel label = new JLabel(new ImageIcon(img_));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        //frame.add(label);
-        //frame.pack();
-        frame.setSize(1920,1080);
+        frame.add(label);
+        frame.pack();
 
-        // Add button
-        button1.setBounds(55*5, 116*5, 450, 215);
-        button2.setBounds(55*5 + 800,116*5,450,215);
-        label.setBounds(55*5 + 600, 400,700,215);
-        button1.addActionListener(new ActionListener() {
+        // Add quit button
+        quitbutton.setBounds(53*5, 105*5, 450, 215);
+        quitbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 frame.dispose();
             }
         });
+        quitbutton.setFocusPainted(false);
+        quitbutton.setBorderPainted(false);
+        quitbutton.setContentAreaFilled(false);
 
-        button2.addActionListener(new ActionListener() {
+        // Add restart button
+        restartbutton.setBounds(53*5, 65*5, 450, 215);
+        restartbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -72,12 +75,12 @@ public class EndMenu{
                 game.restartGame();
             }
         });
+        restartbutton.setFocusPainted(false);
+        restartbutton.setBorderPainted(false);
+        restartbutton.setContentAreaFilled(false);
 
-        frame.add(button1);
-        frame.getContentPane().add(button1);
-        frame.add(button2);
-        frame.getContentPane().add(button2);
-        frame.add(label);
+        frame.add(restartbutton);
+        frame.getContentPane().add(restartbutton);
         frame.setLayout(null);
 
         frame.setLocationRelativeTo(null);

@@ -18,10 +18,19 @@ public class bossState extends State {
         s.player.update();
 
         // Check if the player is alive
-        if (s.player.health <= 0) {
+        if (s.player.isDead()) {
             s.game.window.dispose();
             s.thread = null;
-            EndMenu endMenu = new EndMenu();
+            EndMenu endMenu = new EndMenu(false);
+            endMenu.draw();
+            return;
+        }
+
+        // Check if boss died
+        if( s.boss.isDead()){
+            s.game.window.dispose();
+            s.thread = null;
+            EndMenu endMenu = new EndMenu(true);
             endMenu.draw();
             return;
         }
