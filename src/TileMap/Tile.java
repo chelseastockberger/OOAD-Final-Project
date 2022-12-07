@@ -11,7 +11,6 @@ public class Tile {
     public Tile(TileType type){
         this.type = type;
         rect = new Rectangle(0,0,32,32);
-
     }
 
 

@@ -19,6 +19,7 @@ PLAYER
 Holds all data related to the Player
 Takes user input to move player/do actions
 Handles attacking and blocking
+Includes design pattern: Game Loop
  */
 
 
@@ -29,11 +30,9 @@ public class Player extends Entity{
     public BufferedImage up1,down1,left1,right1,up2,down2,left2,right2;
     public BufferedImage upBlock, block;
     public Projectile currproj;
-    int attackCount = 0;
     int blockCount = 0;
     boolean attacking;
     boolean blocking;
-    public int damage;
     public int defense;
     ArrayList<Items> items;
     public Weapons weapon;
@@ -169,8 +168,14 @@ public class Player extends Entity{
     public void draw(Graphics2D g){
 
         drawHat(g);
+        drawMove(g);
+        drawAttackorBlock(g);
 
-        // Draw player moving
+    }
+
+    // Draw player movings
+    void drawMove(Graphics2D g){
+
         switch(dir){
             case "up":
                 if(animStep == 1){
@@ -201,9 +206,7 @@ public class Player extends Entity{
                 }
                 break;
         }
-
         g.drawImage(currimage,x,y,s.tileSize,s.tileSize,null);
-        drawAttackorBlock(g);
 
     }
 
@@ -341,6 +344,7 @@ public class Player extends Entity{
     }
 
     // 25 frames of attack, runs when attacking is true, only does attack once 25 ms passed
+    // EXAMPLE OF GAME LOOP
     public void doAttack(){
 
         attackCount++;

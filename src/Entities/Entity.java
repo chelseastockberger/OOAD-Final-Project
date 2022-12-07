@@ -19,7 +19,9 @@ public class Entity {
     public Rectangle hitbox;
     public int animCount = 0;
     public int animStep = 1;
+    public int damage;
     public boolean collision = false;
+    int attackCount = 0;
 
     public void setPos(){
         Tile pos = s.map.getRandomPosition();
