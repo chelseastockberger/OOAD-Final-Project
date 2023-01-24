@@ -1,7 +1,6 @@
 package Entities;
 
 import Main.Screen;
-import TileMap.Tile;
 
 public class EnemyFactory {
 
@@ -21,7 +20,6 @@ public class EnemyFactory {
         }
 
         return null;
-
 
     }
 

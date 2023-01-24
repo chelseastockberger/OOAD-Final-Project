@@ -23,7 +23,6 @@ public class TileFactory {
         }
 
          return new Tile(tile);
-
     }
 
 }

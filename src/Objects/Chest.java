@@ -37,6 +37,7 @@ public class Chest extends GameObject {
         // Chance of weapon or item
         int c = (int) ((Math.random() * 2) + 1);
 
+        // CHANGE variables here to make magic wand only in chest (c=7, 3)
         if(c == 1) {
             // Get random item
             int rand = (int) ((Math.random() * 4) + 1);

@@ -40,6 +40,7 @@ public class Game {
     public void newGame(boolean dostartmenu){
 
         audio = new Audio(false);
+        lastLevel = false;
 
         if(dostartmenu) {
             StartMenu startMenu = new StartMenu();
