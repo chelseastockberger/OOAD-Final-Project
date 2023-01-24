@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FINALPROJECT.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Project 6 Update.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/FINALPROJECT/Entities/Blob.class" beforeDir="false" />
@@ -73,6 +74,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2KkjyOP3Gie01qCM1ryQrFWOSPQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
